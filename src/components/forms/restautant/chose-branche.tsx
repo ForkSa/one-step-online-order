@@ -64,7 +64,7 @@ export default function ChoosingBranchForm({
     }
 
     return (
-        <div className="container mt-6 space-y-6">
+        <div className="container  mt-6 space-y-6">
             <Form {...form}>
                 <FormLoading loading={loading}>
                     <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -109,7 +109,7 @@ export default function ChoosingBranchForm({
                             <ButtonWithLoading
                                 type={isThereBranches ? "submit" : "button"}
                                 size="lg"
-                                className="w-full absolute -bottom-[26px] left-1/2 -translate-x-1/2 "
+                                className="w-full absolute md:bottom-[47px] -bottom-[26px] left-1/2 -translate-x-1/2 "
                                 loading={form?.formState?.isSubmitting}
                                 onClick={handleNextClick}
                             >

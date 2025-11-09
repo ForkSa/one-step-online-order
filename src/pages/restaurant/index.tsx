@@ -18,7 +18,7 @@ export default function Restaurant() {
     if (loading) return <RestaurantSkeleton />
     return (
         <>
-            <div className="relative w-full shrink-0">
+            <div className="relative  w-full shrink-0">
                 <Link
                     to={`/restaurant/${id}/menu`}
                     className="absolute top-4 right-4 md:top-6 md:right-6 z-10 rounded-lg py-2.5 px-3 bg-white "
