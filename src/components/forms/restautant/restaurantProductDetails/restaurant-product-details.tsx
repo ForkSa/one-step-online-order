@@ -122,7 +122,7 @@ export default function RestaurantProductDetailsForm({ productData }: Restaurant
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="mt-6 container">
+            <div className="mt-6 md:pb-[120px] pb-[150px] container">
                 <div className="mb-6">
                     <div className="flex items-start justify-between mb-2">
                         <h3 className="text-xl font-bold text-gray-900">{productData.name}</h3>
@@ -341,7 +341,7 @@ export default function RestaurantProductDetailsForm({ productData }: Restaurant
                 </div>
 
                 {/* Quantity and Add to Cart Section */}
-                <div className="mt-8 flex items-center justify-between gap-4">
+                <div className="md:mt-8 mt-[20px] flex items-center justify-between gap-4">
                     <button
                         type="submit"
                         className="flex-1 bg-primary text-white font-semibold py-4 px-6 rounded-xl hover:bg-primary/90 transition-colors text-lg"

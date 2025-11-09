@@ -31,4 +31,3 @@ export interface CartSummary {
     tax: number
     total: number
 }
-

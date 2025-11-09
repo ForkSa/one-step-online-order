@@ -1,4 +1,3 @@
-
 interface HeroCardProps {
     title: string
     description: string

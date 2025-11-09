@@ -1,5 +1,6 @@
-import type { CartItem } from "@/types/cart"
 import { apiClient } from "@/lib/api-client"
+
+import type { CartItem } from "@/types/cart"
 
 // Get cart from API
 export const getCart = async (): Promise<CartItem[]> => {
@@ -71,4 +72,3 @@ export const clearCartAPI = async (): Promise<void> => {
         throw error
     }
 }
-

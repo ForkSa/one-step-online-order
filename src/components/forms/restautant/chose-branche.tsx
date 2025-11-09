@@ -56,7 +56,7 @@ export default function ChoosingBranchForm({
             console.error("Error:", error)
         }
     }
-    
+
     function handleNextClick() {
         if (!isThereBranches) {
             navigate(`/restaurant/${restaurantId}/menu`)

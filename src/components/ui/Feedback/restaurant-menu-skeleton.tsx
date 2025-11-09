@@ -1,8 +1,4 @@
-import { Skeleton } from "@/components/ui/skeleton";
-
-
-
-
+import { Skeleton } from "@/components/ui/skeleton"
 
 /**
  * Hero Section Skeleton
