@@ -23,7 +23,7 @@ export default function Menu() {
         <div className="min-h-screen ">
             <div className="relative w-full shrink-0">
                 <Link
-                    to={`/restaurant/${id}/product_details/${rest?.id}`}
+                    to={`/restaurant/${id}/`}
                     className="absolute top-4 right-4 md:top-6 md:right-6 z-10 rounded-lg py-2.5 px-3 bg-white/90 backdrop-blur-sm shadow-lg hover:bg-white transition-all duration-200"
                     aria-label="Back to menu"
                 >

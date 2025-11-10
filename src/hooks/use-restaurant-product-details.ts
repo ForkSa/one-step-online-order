@@ -95,6 +95,6 @@ export const useRestaurantProductDetails = ({ productData }: UseRestaurantProduc
         note,
         variations,
         onSubmit,
-        setValue
+        setValue,
     }
 }
