@@ -6,7 +6,7 @@ import { RestaurantProductDetailsFormSkeleton } from "@/components/ui/Feedback/r
 import CartModule from "@/components/ui/cart/cart-module"
 
 import hero from "@/assets/images/hero-section-product.webp"
-import RestaurantProductDetailsForm from "@/components/forms/restautant/restaurantProductDetails/restaurant-product-details"
+import RestaurantProductDetailsForm from "@/components/forms/restaurantProductDetails/restaurant-product-details"
 import { useRestaurant } from "@/hooks/use-restaurants"
 
 export default function ProductDetails() {
