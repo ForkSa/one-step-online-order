@@ -10,6 +10,7 @@ export default function HeroCard({ title, description, image }: HeroCardProps) {
             <div className="rounded-2xl flex gap-2 bg-white items-center border border-gray-border p-4 ">
                 <img
                     src={image}
+                    loading="lazy"
                     alt="restaurant"
                     className="border  shrink-0 border-gray-300  size-[71px] sm:size-16 md:size-20 rounded-full object-cover"
                 />

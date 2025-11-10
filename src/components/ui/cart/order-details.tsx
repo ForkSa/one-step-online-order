@@ -41,7 +41,7 @@ export default function OrderDetails({ onCancelOrder }: OrderDetailsProps) {
         removeItem(itemId)
     }
 
-    if (items.length === 0) {
+    if (items?.length === 0) {
         return (
             <div className="bg-white rounded-2xl shadow-sm overflow-hidden p-8 text-center">
                 <p className="text-gray-500 text-lg">السلة فارغة</p>
@@ -78,6 +78,7 @@ export default function OrderDetails({ onCancelOrder }: OrderDetailsProps) {
                                         <img
                                             src={item.image}
                                             alt={item.name}
+                                            loading="lazy"
                                             className="size-20 rounded-xl object-cover"
                                             onError={(e) => {
                                                 // Fallback image if loading fails

@@ -35,7 +35,12 @@ export default function Restaurant() {
             </div>
 
             <div className="container flex flex-col items-center px-4">
-                <img src={welcomImage} alt="welcome" className="mt-[73px] max-w-full h-auto object-cover" />
+                <img
+                    src={welcomImage}
+                    loading="lazy"
+                    alt="welcome"
+                    className="mt-[73px] max-w-full h-auto object-cover"
+                />
                 <p className="font-medium text-center mt-4 text-gray-700 max-w-2xl px-4">
                     اطلب الآن من طاولتك بدون انتظار، تجربة سريعة وسلسة بضغطة واحدة.
                 </p>

@@ -17,6 +17,7 @@ export default function ProductCard({ item, handleAddToCart, setHoveredItem, hov
                     <img
                         src={item.image}
                         alt={item.name}
+                        loading="lazy"
                         className="size-[70px] md:w-24 md:h-24 rounded-2xl object-cover shadow-sm group-hover:shadow-md transition-shadow duration-300"
                     />
                     <div className="absolute inset-0 rounded-2xl bg-primary/5 group-hover:bg-primary/10 transition-colors duration-300" />
