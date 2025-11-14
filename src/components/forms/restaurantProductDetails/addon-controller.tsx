@@ -35,12 +35,12 @@ export default function AddonController({ control, productData }: AddonControlle
                                         htmlFor={`addon-${addOn.id}`}
                                         className={`
                                         relative block min-w-[204px] md:min-w-[250px]
-                                        rounded-2xl p-4 cursor-pointer 
+                                        rounded-2xl p-3 cursor-pointer 
                                         transition-all duration-300 ease-out
                                         ${
                                             isSelected
                                                 ? " bg-primary text-white "
-                                                : "bg-white border-2 border-gray-200 hover:border-primary/50 hover:shadow-md"
+                                                : "bg-white border-1 border-gray-200 hover:border-primary/50 hover:shadow-md"
                                         }
                                     `}
                                     >
@@ -71,7 +71,7 @@ export default function AddonController({ control, productData }: AddonControlle
 
                                             <div
                                                 className={`
-                                                w-5 h-5 rounded border-2 flex items-center justify-center
+                                                w-5 h-5 rounded border-1 flex items-center justify-center
                                                 transition-all duration-200
                                                 ${
                                                     isSelected

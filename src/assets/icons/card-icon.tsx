@@ -1,7 +1,7 @@
 interface Props {
     className?: string
 }
-export default function CardIcon({ className='#292D32' }: Props) {
+export default function CardIcon({ className = "#292D32" }: Props) {
     return (
         <svg width="18" height="18" viewBox="0 0 18 18" fill={className} xmlns="http://www.w3.org/2000/svg">
             <path
@@ -18,7 +18,7 @@ export default function CardIcon({ className='#292D32' }: Props) {
             />
             <path
                 d="M13.17 15.9375H4.83C1.845 15.9375 0.9375 15.0375 0.9375 12.0825V5.9175C0.9375 2.9625 1.845 2.0625 4.83 2.0625H13.1625C16.1475 2.0625 17.055 2.9625 17.055 5.9175V12.075C17.0625 15.0375 16.155 15.9375 13.17 15.9375ZM4.83 3.1875C2.475 3.1875 2.0625 3.5925 2.0625 5.9175V12.075C2.0625 14.4 2.475 14.805 4.83 14.805H13.1625C15.5175 14.805 15.93 14.4 15.93 12.075V5.9175C15.93 3.5925 15.5175 3.1875 13.1625 3.1875H4.83Z"
-                fill={className} 
+                fill={className}
             />
         </svg>
     )

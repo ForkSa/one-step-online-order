@@ -39,12 +39,12 @@ export default function DifferentController({ control, productData }: DifferentC
                                         htmlFor={`variation-${variation.id}`}
                                         className={`
                                         relative block min-w-[204px] md:min-w-[250px]
-                                        rounded-2xl p-4 cursor-pointer 
+                                        rounded-2xl p-[10px] cursor-pointer 
                                         transition-all duration-300 ease-out
                                         ${
                                             isSelected
                                                 ? "bg-primary text-white shadow-lg scale-[1.02]"
-                                                : "bg-white border-2 border-gray-200 hover:border-primary/50 hover:shadow-md"
+                                                : "bg-white border-1 border-gray-200 hover:border-primary/50 hover:shadow-md"
                                         }
                                     `}
                                     >
@@ -70,12 +70,12 @@ export default function DifferentController({ control, productData }: DifferentC
 
                                             <div
                                                 className={`
-                                                w-5 h-5 rounded-full border-2 flex items-center justify-center
+                                                w-5 h-5 rounded-full border-1 flex items-center justify-center
                                                 transition-all duration-200
                                                 ${
                                                     isSelected
                                                         ? "bg-white border-white"
-                                                        : "bg-transparent border-gray-300"
+                                                        : "bg-transparent  border-primary"
                                                 }
                                             `}
                                             >
