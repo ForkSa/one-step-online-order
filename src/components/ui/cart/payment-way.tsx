@@ -1,6 +1,8 @@
-import { Banknote, CreditCardIcon, WalletIcon } from "lucide-react"
-
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+
+import CardIcon from "@/assets/icons/card-icon"
+import MoneysIcon from "@/assets/icons/moneys-icon"
+import WalletIcon from "@/assets/icons/wallet-icon"
 
 import { Input } from "../input"
 
@@ -25,9 +27,7 @@ export default function PaymentWay({ paymentMethod, setPaymentMethod }: PaymentW
                     <span className={`font-medium  text-sm  ${paymentMethod === "visa" ? "text-white" : "text-black"}`}>
                         كاش و فيزا
                     </span>
-                    <WalletIcon
-                        className={`w-6 h-6 shrink-0 ${paymentMethod === "visa" ? "text-white" : "text-black"}`}
-                    />
+                    <WalletIcon className={` ${paymentMethod === "visa" ? "white" : "black"}`} />
                 </label>
 
                 <RadioGroupItem value="visa-cash" id="payment-visa-cash" className="peer sr-only" />
@@ -43,9 +43,7 @@ export default function PaymentWay({ paymentMethod, setPaymentMethod }: PaymentW
                     >
                         فيزا
                     </span>
-                    <CreditCardIcon
-                        className={`w-6 h-6 ${paymentMethod === "visa-cash" ? "text-white" : "text-black"}`}
-                    />
+                    <CardIcon className={`${paymentMethod === "visa-cash" ? "white" : "black"}`} />
                 </label>
                 <RadioGroupItem value="cash" id="payment-cash" className="peer sr-only" />
                 <label
@@ -58,7 +56,7 @@ export default function PaymentWay({ paymentMethod, setPaymentMethod }: PaymentW
                     <span className={`font-medium text-sm  ${paymentMethod === "cash" ? "text-white" : "text-black"}`}>
                         كاش
                     </span>
-                    <Banknote className={`w-6 h-6 ${paymentMethod === "cash" ? "text-white" : "text-black"}`} />
+                    <MoneysIcon className={`${paymentMethod === "cash" ? "white" : "black"}`} />
                 </label>
             </RadioGroup>
 

@@ -27,7 +27,7 @@ export function BranchSelectSkeleton() {
                 </div>
 
                 {/* Skeleton for the button */}
-                <Skeleton className="w-full h-12 bg-gray-200 rounded-lg absolute -bottom-[26px] left-1/2 -translate-x-1/2" />
+                <Skeleton className="w-full h-12 bg-gray-200 rounded-lg absolute bottom-[6px] left-1/2 -translate-x-1/2" />
             </div>
         </div>
     )

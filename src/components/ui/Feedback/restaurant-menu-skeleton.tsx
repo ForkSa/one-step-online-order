@@ -10,10 +10,10 @@ export function HeroSkeleton() {
                 <Skeleton className="w-12 h-12 rounded-lg" />
             </div>
 
-            <Skeleton className="w-full h-[161px] sm:h-64 md:h-96 lg:h-[500px]" />
+            <Skeleton className="w-full  bg-gray-50 h-[161px] sm:h-64 md:h-96 lg:h-[500px]" />
 
             <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 container  ">
-                <div className="bg-white rounded-2xl shadow-lg p-4 flex items-center gap-4">
+                <div className=" bg-white rounded-2xl  p-4 flex items-center gap-4">
                     <Skeleton className="w-16 h-16 rounded-full" />
                     <div className="flex-1 space-y-2">
                         <Skeleton className="h-6 w-24" />
@@ -61,8 +61,8 @@ export function MenuItemSkeleton() {
 
                     <div className="flex items-center justify-between mt-3">
                         <div className="flex-1 space-y-1">
-                            <Skeleton className="h-4 w-full" />
-                            <Skeleton className="h-4 w-3/4" />
+                            <Skeleton className="h-4 w-[70%]" />
+                            <Skeleton className="h-4 w-[40%]" />
                         </div>
                         <Skeleton className="w-10 h-10 rounded-xl ml-2 flex-shrink-0" />
                     </div>

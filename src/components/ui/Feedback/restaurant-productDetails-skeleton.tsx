@@ -91,7 +91,7 @@ export function ProductDetailsSkeleton() {
 // Skeleton for the product details form component
 export function RestaurantProductDetailsFormSkeleton() {
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen  relative bg-gray-50">
             <div className="relative w-full shrink-0">
                 <div className="absolute top-4 right-4 md:top-6 md:right-6 z-10">
                     <Skeleton className="w-12 h-12 rounded-lg" />
@@ -114,7 +114,7 @@ export function RestaurantProductDetailsFormSkeleton() {
                 {/* Variations Section Skeleton */}
                 <div className="mt-8">
                     <Skeleton className="h-6 w-32 bg-gray-200 rounded mb-4" />
-                    <div className="flex gap-3  pb-2">
+                    <div className="flex gap-3 overflow-hidden  pb-2">
                         {[1, 2, 3].map((item) => (
                             <div
                                 key={item}
@@ -131,9 +131,9 @@ export function RestaurantProductDetailsFormSkeleton() {
                 </div>
 
                 {/* Addons Section Skeleton */}
-                <div className="mt-8">
+                <div className="mt-8 ">
                     <Skeleton className="h-6 w-20 bg-gray-200 rounded-lg mb-4" />
-                    <div className="flex gap-3 pb-2">
+                    <div className="flex gap-3 overflow-hidden pb-2">
                         {[1, 2, 3, 4].map((item) => (
                             <div
                                 key={item}
@@ -149,7 +149,7 @@ export function RestaurantProductDetailsFormSkeleton() {
                     </div>
                 </div>
 
-                <Skeleton className="mt-4 w-full h-16 bg-gray-200 rounded-lg" />
+                <Skeleton className="  w-[95%] mt-[24px] h-16 bg-gray-200 rounded-lg" />
             </div>
         </div>
     )

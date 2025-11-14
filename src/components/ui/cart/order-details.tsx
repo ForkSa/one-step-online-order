@@ -1,6 +1,7 @@
 import { useAtom, useAtomValue } from "jotai"
-import { Edit, Minus, Plus, Trash } from "lucide-react"
+import { Edit, Minus, Plus } from "lucide-react"
 
+import TrashIcon from "@/assets/icons/trash-icon"
 import {
     cartItemsAtom,
     clearCartAtom,
@@ -125,7 +126,7 @@ export default function OrderDetails({ onCancelOrder }: OrderDetailsProps) {
                                             aria-label="تقليل الكمية"
                                         >
                                             {item.quantity === 1 ? (
-                                                <Trash className="w-4 h-4 text-red-600 " />
+                                                <TrashIcon />
                                             ) : (
                                                 <Minus className="w-4 h-4 text-red-600 " />
                                             )}

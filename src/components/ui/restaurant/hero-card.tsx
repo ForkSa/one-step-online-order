@@ -6,7 +6,7 @@ interface HeroCardProps {
 
 export default function HeroCard({ title, description, image }: HeroCardProps) {
     return (
-        <div className="container absolute left-1/2 -translate-x-1/2  z-3  -bottom-10 sm:-bottom-12 md:-bottom-16">
+        <div className="container absolute left-1/2 -translate-x-1/2  z-3  -bottom-12  md:-bottom-13">
             <div className="rounded-2xl flex gap-2 bg-white items-center border border-gray-border p-4 ">
                 <img
                     src={image}
