@@ -31,15 +31,14 @@ export default function Menu() {
                 </Link>
 
                 <div className="w-full overflow-hidden h-[161px] sm:h-64 md:h-96 lg:h-[500px]">
-                    <img src={hero} alt="Restaurant Hero" className="w-full h-full object-cover" />
+                    <img src={rest?.image || hero} alt="Restaurant Hero" className="w-full h-full object-cover" />
                 </div>
 
                 <HeroCard title={rest?.name || ""} description={rest?.description || ""} image={rest?.image || ""} />
             </div>
 
             <div className="container relative mx-auto px-4">
-                <CategoriesCarousel />
-
+                <CategoriesCarousel   />
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-8">
                     {rest &&
                         rest?.menu?.map((item: MenuItem) => (

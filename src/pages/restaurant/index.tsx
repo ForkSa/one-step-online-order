@@ -28,7 +28,7 @@ export default function Restaurant() {
                 </Link>
 
                 <div className="w-full overflow-hidden h-[161px] sm:h-64 md:h-96 lg:h-[500px]">
-                    <img src={hero} alt="Restaurant Hero" className="w-full h-full object-cover" />
+                    <img src={data?.image || hero} alt="Restaurant Hero" className="w-full h-full object-cover" />
                 </div>
 
                 <HeroCard title={data?.name || ""} description={data?.description || ""} image={data?.image || ""} />
