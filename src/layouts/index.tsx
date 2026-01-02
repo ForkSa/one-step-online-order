@@ -16,7 +16,7 @@ export default function Layout() {
                 <NuqsAdapter>
                     <TanstackProvider>
                         <Suspense fallback={<GlobalFallback />}>
-                            <div className="min-h-screen overflow-x-hidden pb-10">{<Outlet />}</div>
+                            <div className="min-h-screen overflow-x-hidden">{<Outlet />}</div>
                         </Suspense>
                         <Toaster />
                     </TanstackProvider>

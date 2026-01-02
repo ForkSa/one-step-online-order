@@ -17,12 +17,19 @@
     --color-popover-foreground: var(--popover-foreground);
     --color-primary: var(--primary);
     --color-primary-foreground: var(--primary-foreground);
+    --color-white-200: var(--white-200);
+    --color-gray-200: var(--gray-200);
+    --color-gray-100: var(--gray-100);
+    --color-gray-150: var(--gray-150);
     --color-gray-200: var(--gray-200);
     --color-gray-300: var(--gray-300);
     --color-gray-400: var(--gray-400);
     --color-gray-500: var(--gray-500);
     --color-gray-600: var(--gray-600);
     --color-gray-700: var(--gray-700);
+    --color-gray-800: var(--gray-800);
+    
+    --color-gray-border: var(--gray-border);
     --color-text-warn: var(--text-warn);
     --color-secondary: var(--secondary);
     --color-secondary-foreground: var(--secondary-foreground);
@@ -61,12 +68,17 @@
     --primary: rgba(69, 46, 134, 1);
     --primary-foreground: #fff;
     --secondary: rgba(27, 192, 153, 1);
+    --white-200: rgb(247, 247, 247,1);
+    --gray-100: rgba(223, 226, 230, 1);
+    --gray-150:rgba(131, 131, 131, 1);
     --gray-200: rgba(239, 239, 239, 1);
     --gray-300: rgba(211, 211, 211, 1);
     --gray-400: rgba(247, 247, 247, 1);
     --gray-500: rgba(129, 129, 129, 1);
     --gray-600: rgba(171, 171, 171, 1);
     --gray-700: rgba(114, 127, 146, 1);
+    --gray-800: rgba(68, 68, 68, 1);
+    --gray-border: rgba(211, 211, 211, 1);
     --text-warn: rgba(255, 153, 0, 1);
     --secondary-foreground: oklch(0.21 0.034 264.665);
     --muted: oklch(0.967 0.003 264.542);
