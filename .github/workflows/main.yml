@@ -23,6 +23,8 @@ jobs:
             cd /var/www/onestep/one-step-online-order
             git stash 
             git pull origin main
+            npm i -g pm2 
+            npm i -g pnpm
             pnpm i  
             pnpm run build
             pm2 restart one-step-online-order
