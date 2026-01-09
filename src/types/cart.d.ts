@@ -1,33 +1,46 @@
-export interface CartItem {
-    id: string // Unique cart item ID
-    productId: number // Menu item ID
-    name: string
-    description: string
-    price: number // Base price
-    quantity: number
-    image: string
-    variation?: {
-        id: number
-        name: string
-        price: number
-    }
-    addons?: Array<{
-        id: number
-        name: string
-        price: number
-    }>
-    note?: string
-    restaurantId?: string | number
+type OrderSummaryResponseType = {
+    summary: OrderSummaryType
 }
 
-export interface Cart {
-    items: CartItem[]
-    restaurantId?: string | number
-}
-
-export interface CartSummary {
+type OrderSummaryType = {
+    items: OrderSummaryItemType[]
     itemCount: number
     subtotal: number
     tax: number
     total: number
+}
+
+type OrderSummaryItemType = {
+    product_id: number
+    product_name: string
+    difference_id: number | null
+    quantity: number
+    unit_price: number
+    price_without_tax_unit: number
+    addons: OrderSummaryAddonType[]
+    tax: number
+    total: number
+    notes: string
+}
+
+type OrderSummaryAddonType = {
+    addon_id: number
+    name: string
+    quantity: number
+    unit_price: number
+    price_without_tax_unit: number
+    tax_unit: number
+    total: number
+}
+
+type ValidateCartItemType = {
+    product_id: number | string
+    note?: string
+    quantity?: number
+    difference_id?: number | string
+    addons: { addon_id?: number | string; quantity?: number | undefined }[]
+}
+type ValidateCartInputs = {
+    branch_id: string
+    items: ValidateCartItemType[]
 }

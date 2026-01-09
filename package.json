@@ -4,9 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "pnpm json-server & vite",
+    "dev": "vite",
     "build": "tsc -b && vite build",
-    "preview": "pnpm json-server & vite preview",
+    "preview": "vite preview",
     "lint": "eslint",
     "lint-fix": "eslint --fix",
     "prepare": "husky",
