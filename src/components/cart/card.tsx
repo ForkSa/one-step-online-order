@@ -36,7 +36,7 @@ export default function CartCard({ className, item }: Readonly<Props>) {
                 <div className="w-full">
                     <div className="flex justify-between gap-x-4">
                         <p className="flex gap-x-2 items-start">
-                            {item?.product_name}
+                            <span className="line-clamp-2">{item?.product_name}</span>
                             <span className="size-8 grid place-items-center text-xs bg-gray-200 text-primary rounded-lg shrink-0">
                                 x {item?.quantity}
                             </span>

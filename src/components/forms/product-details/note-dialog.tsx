@@ -60,7 +60,7 @@ export default function ProductDetailsNoteDialog({ onSubmit, className }: Readon
                     <Button type="submit" onClick={handleSubmit}>
                         حفظ
                     </Button>
-                    <Button type="button" variant="outline" onClick={handleCancel}>
+                    <Button type="button" variant="outline" className="border-black" onClick={handleCancel}>
                         إلغاء
                     </Button>
                 </DialogFooter>

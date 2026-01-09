@@ -4,7 +4,7 @@ import { Link, useParams } from "react-router-dom"
 
 import { RestaurantProductDetailsFormSkeleton } from "@/components/ui/Feedback/restaurant-productDetails-skeleton"
 
-import RestaurantProductDetailsForm from "@/components/forms/product-details"
+import ProductDetailsForm from "@/components/forms/product-details"
 import { useProductById } from "@/queries/products"
 
 export default function StoreProduct() {
@@ -48,7 +48,7 @@ export default function StoreProduct() {
                 </div>
             </div>
 
-            <RestaurantProductDetailsForm product={data} slug={slug} />
+            <ProductDetailsForm product={data} slug={slug} />
         </div>
     )
 }
