@@ -126,7 +126,7 @@ const mapValidateCartInputs = ({
                 return {
                     product_id: product.product_id,
                     quantity: item.quantity + 1,
-                    note: product?.note ?? item?.notes,
+                    notes: product?.notes ?? item?.notes,
                     ...(product?.difference_id !== undefined && { difference_id: product?.difference_id }),
                     addons: product?.addons?.map((addon) => ({ addon_id: addon.addon_id, quantity: 1 })) ?? [],
                 }
@@ -135,7 +135,7 @@ const mapValidateCartInputs = ({
             return {
                 product_id: item?.product_id,
                 quantity: item?.quantity,
-                note: item?.notes ?? "",
+                notes: item?.notes ?? "",
                 ...(item.difference_id !== null && { difference_id: item.difference_id }),
                 addons: item.addons?.map((addon) => ({ addon_id: addon.addon_id, quantity: addon?.quantity })) ?? [],
             }
@@ -146,7 +146,7 @@ const mapValidateCartInputs = ({
             items?.push({
                 product_id: product.product_id,
                 quantity: 1,
-                note: product?.note,
+                notes: product?.notes,
                 ...(product?.difference_id !== undefined && { difference_id: product?.difference_id }),
                 addons: product?.addons?.map((addon) => ({ addon_id: addon.addon_id, quantity: 1 })) ?? [],
             })
@@ -159,7 +159,7 @@ const mapValidateCartInputs = ({
             {
                 product_id: product?.product_id,
                 quantity: 1,
-                note: product?.note,
+                notes: product?.notes,
                 ...(product?.difference_id && { difference_id: product?.difference_id }),
                 addons: product?.addons?.map((addon) => ({ addon_id: addon.addon_id, quantity: 1 })),
             },

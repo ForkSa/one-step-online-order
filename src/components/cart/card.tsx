@@ -8,7 +8,6 @@ import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import CounterInput from "@/components/ui/counter-input"
 
-import hero from "@/assets/images/burger-imge.webp"
 import { storeInfoAtom } from "@/atoms"
 import { useUpdateCart } from "@/hooks/use-cart"
 
@@ -31,7 +30,11 @@ export default function CartCard({ className, item }: Readonly<Props>) {
     return (
         <div className={cn("p-4", className)}>
             <div className="flex gap-x-3">
-                <img src={hero} alt={""} className="size-18 aspect-square object-cover rounded-2xl shrink-0" />
+                <img
+                    src={item?.product_image}
+                    alt={""}
+                    className="size-18 aspect-square object-cover rounded-2xl shrink-0"
+                />
 
                 <div className="w-full">
                     <div className="flex justify-between gap-x-4">

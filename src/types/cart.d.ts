@@ -21,6 +21,7 @@ type OrderSummaryItemType = {
     tax: number
     total: number
     notes: string
+    product_image: string
 }
 
 type OrderSummaryAddonType = {
@@ -35,7 +36,7 @@ type OrderSummaryAddonType = {
 
 type ValidateCartItemType = {
     product_id: number | string
-    note?: string
+    notes?: string
     quantity?: number
     difference_id?: number | string
     addons: { addon_id?: number | string; quantity?: number | undefined }[]

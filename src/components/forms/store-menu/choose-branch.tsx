@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useAtom } from "jotai"
 
-import { useMemo } from "react"
+import { useEffect, useMemo } from "react"
 import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router"
 
@@ -31,10 +31,24 @@ export default function ChooseBranchForm({ loading = false, branches, slug }: Ch
 
     const form = useForm<ChooseBranchFormValues>({
         resolver: zodResolver(chooseBranchSchema),
-        values: {
-            branchId: storeInfo?.branch?.id ?? "",
+        defaultValues: {
+            branchId: "",
         },
     })
+
+    // Update form when storeInfo loads from localStorage on page reload
+    useEffect(() => {
+        if (!form) return
+
+        const branchId = storeInfo?.branch?.id ?? ""
+        const currentFormValue = form.getValues("branchId")
+
+        if (branchId && branchId !== currentFormValue) {
+            setTimeout(() => {
+                form.setValue("branchId", branchId, { shouldValidate: true })
+            }, 0)
+        }
+    }, [storeInfo?.branch?.id, form])
 
     async function onSubmit(inputs: ChooseBranchFormValues) {
         try {
@@ -67,6 +81,7 @@ export default function ChooseBranchForm({ loading = false, branches, slug }: Ch
                                     <FormItem className="!space-y-2">
                                         <FormLabel className="font-medium text-lg">إختر الفرع</FormLabel>
                                         <Select
+                                            key={`select-${storeInfo?.branch?.id ?? "empty"}`}
                                             onValueChange={field?.onChange}
                                             dir="rtl"
                                             value={field?.value ?? undefined}

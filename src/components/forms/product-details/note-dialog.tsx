@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import { cn } from "@/lib/utils"
 
@@ -9,12 +9,20 @@ import { Textarea } from "@/components/ui/textarea"
 
 type Props = {
     onSubmit: (note: string) => void
+    value?: string
     className?: string
 }
 
-export default function ProductDetailsNoteDialog({ onSubmit, className }: Readonly<Props>) {
-    const [note, setNote] = useState("")
+export default function ProductDetailsNoteDialog({ value, onSubmit, className }: Readonly<Props>) {
+    const [note, setNote] = useState(value ?? "")
     const [isOpen, setIsOpen] = useState(false)
+
+    useEffect(() => {
+        if (!value) return
+        setTimeout(() => {
+            setNote(value)
+        }, 0)
+    }, [value])
 
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setNote(e.target.value)

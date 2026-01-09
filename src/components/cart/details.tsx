@@ -1,10 +1,13 @@
-import { useAtomValue } from "jotai"
+import { useAtom, useAtomValue } from "jotai"
+
+import { useNavigate } from "react-router"
 
 import { cn } from "@/lib/utils"
 
 import { Button } from "@/components/ui/button"
 
 import { cartSummary } from "@/atoms"
+import { storeInfoAtom } from "@/atoms"
 import CartCard from "@/components/cart/card"
 
 interface Props {
@@ -12,12 +15,24 @@ interface Props {
 }
 
 export default function CartDetails({ className }: Readonly<Props>) {
-    const summary = useAtomValue(cartSummary)
+    const [summary, setSummary] = useAtom(cartSummary)
+    const { slug } = useAtomValue(storeInfoAtom)
     const items = summary?.items ?? []
 
+    const navigate = useNavigate()
+
     const onCancelOrder = () => {
-        // eslint-disable-next-line no-console
-        console.log("cancel order")
+        navigate(`/store/${slug}`)
+
+        setTimeout(() => {
+            setSummary({
+                items: [],
+                itemCount: 0,
+                subtotal: 0,
+                tax: 0,
+                total: 0,
+            })
+        }, 300)
     }
 
     return (

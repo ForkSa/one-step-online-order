@@ -30,7 +30,7 @@ export default function ProductDetailsForm({ product, slug }: Props) {
         values: {
             variation: findSummaryItem?.difference_id ?? undefined,
             addons: findSummaryItem?.addons?.map((addon) => Number(addon?.addon_id)) ?? [],
-            note: findSummaryItem?.notes ?? "",
+            notes: findSummaryItem?.notes ?? "",
         },
     })
 
@@ -41,7 +41,7 @@ export default function ProductDetailsForm({ product, slug }: Props) {
         validateCart({
             product: {
                 product_id: product?.id ?? 0,
-                note: inputs?.note,
+                notes: inputs?.notes,
                 difference_id: inputs?.variation,
                 addons: inputs?.addons?.map((addon) => ({ addon_id: addon ?? 0 })) ?? [],
             },
@@ -100,7 +100,11 @@ export default function ProductDetailsForm({ product, slug }: Props) {
                             )}
                         />
 
-                        <ProductDetailsNoteDialog onSubmit={(value) => form.setValue("note", value)} className="mt-6" />
+                        <ProductDetailsNoteDialog
+                            value={form?.getValues("notes") ?? ""}
+                            onSubmit={(value) => form.setValue("notes", value)}
+                            className="mt-6"
+                        />
 
                         <ButtonWithLoading loading={isPending} type="submit" className="w-full mt-6">
                             إضافة إلى السلة

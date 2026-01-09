@@ -3,7 +3,7 @@ import { z } from "zod"
 export const productDetailsSchema = z.object({
     variation: z.number().optional(),
     addons: z.array(z.number()).optional(),
-    note: z.string().optional(),
+    notes: z.string().optional(),
 })
 
 export const createProductDetailsSchema = (hasDifferences: boolean) => {
