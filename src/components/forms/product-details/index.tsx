@@ -1,19 +1,20 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useAtomValue } from "jotai"
 
+import { Suspense, lazy } from "react"
 import { useForm } from "react-hook-form"
 
 import { ButtonWithLoading } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
 
 import { cartSummary } from "@/atoms"
-import CartPopup from "@/components/cart/pop-up"
 import ProductDetailsAddons from "@/components/forms/product-details/Addons"
 import ProductDetailsDifferences from "@/components/forms/product-details/differences"
 import ProductDetailsNoteDialog from "@/components/forms/product-details/note-dialog"
 import { type ProductDetailsSchema, createProductDetailsSchema } from "@/components/forms/product-details/schema"
 import { useValidateCart } from "@/hooks/use-cart"
 
+const CartPopup = lazy(() => import("@/components/cart/pop-up"))
 interface Props {
     product: Product | null
     slug: string | undefined
@@ -113,7 +114,9 @@ export default function ProductDetailsForm({ product, slug }: Props) {
                 </form>
             </Form>
 
-            <CartPopup />
+            <Suspense>
+                <CartPopup />
+            </Suspense>
         </>
     )
 }

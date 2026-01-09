@@ -1,6 +1,6 @@
 import { ChevronRight } from "lucide-react"
 
-import { useState } from "react"
+import { Suspense, lazy, useState } from "react"
 import { Link, useParams } from "react-router"
 
 import RestaurantMenuPageSkeleton from "@/components/ui/Feedback/restaurant-menu-skeleton"
@@ -8,11 +8,11 @@ import Categories from "@/components/ui/menu/categories"
 import ProductCard from "@/components/ui/menu/product-card"
 import HeroCard from "@/components/ui/restaurant/hero-card"
 
-import hero from "@/assets/images/burger-imge.webp"
-import CartPopup from "@/components/cart/pop-up"
 import NotFoundPage from "@/pages/not-found"
 import { useProducts } from "@/queries/products"
 import { useStore } from "@/queries/store-menu"
+
+const CartPopup = lazy(() => import("@/components/cart/pop-up"))
 
 export default function StoreItems() {
     const { slug } = useParams()
@@ -42,7 +42,7 @@ export default function StoreItems() {
 
                 <div className="w-full overflow-hidden h-[161px] sm:h-64 md:h-96 lg:h-[500px]">
                     <img
-                        src={data?.organization?.cover_image ?? hero}
+                        src={data?.organization?.cover_image}
                         alt="Restaurant Hero"
                         className="size-full object-cover"
                     />
@@ -66,7 +66,9 @@ export default function StoreItems() {
                 </div>
             </div>
 
-            <CartPopup />
+            <Suspense>
+                <CartPopup />
+            </Suspense>
         </div>
     )
 }
