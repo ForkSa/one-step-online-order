@@ -51,7 +51,7 @@ export default function ChooseBranchForm({ loading = false, branches, slug }: Ch
 
     async function onSubmit(inputs: ChooseBranchFormValues) {
         try {
-            if (!storeInfo?.branch) {
+            if (inputs?.branchId) {
                 setStoreInfo({
                     branch: {
                         id: inputs?.branchId ?? "",
