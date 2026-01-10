@@ -22,7 +22,7 @@ export default function CartDetails({ className }: Readonly<Props>) {
     const navigate = useNavigate()
 
     const onCancelOrder = () => {
-        navigate(`/store/${slug}`)
+        navigate(`/restaurant/${slug}`)
 
         setTimeout(() => {
             setSummary({

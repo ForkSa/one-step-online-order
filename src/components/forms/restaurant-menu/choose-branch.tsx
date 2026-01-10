@@ -8,9 +8,10 @@ import { useNavigate } from "react-router"
 import { ButtonWithLoading } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormLoading, FormMessage } from "@/components/ui/form"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Skeleton } from "@/components/ui/skeleton"
 
 import { storeInfoAtom } from "@/atoms"
-import { type ChooseBranchFormValues, chooseBranchSchema } from "@/components/forms/store-menu/schema"
+import { type ChooseBranchFormValues, chooseBranchSchema } from "@/components/forms/restaurant-menu/schema"
 
 type ChooseBranchFormProps = {
     loading?: boolean
@@ -31,23 +32,21 @@ export default function ChooseBranchForm({ loading = false, branches, slug }: Ch
 
     const form = useForm<ChooseBranchFormValues>({
         resolver: zodResolver(chooseBranchSchema),
-        defaultValues: {
-            branchId: "",
+        values: {
+            branchId: storeInfo?.branch?.id ?? "",
         },
     })
 
-    // Update form when storeInfo loads from localStorage on page reload
     useEffect(() => {
-        if (!form) return
+        let timeout: NodeJS.Timeout
 
-        const branchId = storeInfo?.branch?.id ?? ""
-        const currentFormValue = form.getValues("branchId")
-
-        if (branchId && branchId !== currentFormValue) {
-            setTimeout(() => {
-                form.setValue("branchId", branchId, { shouldValidate: true })
+        if (storeInfo?.branch?.id) {
+            timeout = setTimeout(() => {
+                form.setValue("branchId", storeInfo?.branch?.id ?? "")
             }, 0)
         }
+
+        return () => clearTimeout(timeout)
     }, [storeInfo?.branch?.id, form])
 
     async function onSubmit(inputs: ChooseBranchFormValues) {
@@ -62,7 +61,7 @@ export default function ChooseBranchForm({ loading = false, branches, slug }: Ch
                 })
             }
 
-            navigate(`/store/${slug}/items`)
+            navigate(`/restaurant/${slug}/items`)
         } catch (error) {
             console.error("Error:", error)
         }
@@ -81,7 +80,6 @@ export default function ChooseBranchForm({ loading = false, branches, slug }: Ch
                                     <FormItem className="!space-y-2">
                                         <FormLabel className="font-medium text-lg">إختر الفرع</FormLabel>
                                         <Select
-                                            key={`select-${storeInfo?.branch?.id ?? "empty"}`}
                                             onValueChange={field?.onChange}
                                             dir="rtl"
                                             value={field?.value ?? undefined}
@@ -121,6 +119,16 @@ export default function ChooseBranchForm({ loading = false, branches, slug }: Ch
                     </form>
                 </FormLoading>
             </Form>
+        </div>
+    )
+}
+
+export function ChooseBranchFormSkeleton() {
+    return (
+        <div className="container mt-6 flex flex-col gap-y-4">
+            <Skeleton className="h-10 w-1/4 rounded-xl" />
+            <Skeleton className="h-12 w-full rounded-xl" />
+            <Skeleton className="h-14 w-1/2 rounded-xl" />
         </div>
     )
 }

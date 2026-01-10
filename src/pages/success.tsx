@@ -16,7 +16,7 @@ export default function SuccessPage() {
             <div className="container bg-white p-6 rounded-xl flex flex-col items-center gap-y-4">
                 <CheckCircleIcon className="size-10 text-green-500" />
                 <h1 className="text-xl font-bold">تم إنشاء الطلب بنجاح</h1>
-                <Button onClick={() => navigate(`/store/${slug}`)}>العودة إلى المطعم</Button>
+                <Button onClick={() => navigate(`/restaurant/${slug}`)}>العودة إلى المطعم</Button>
             </div>
         </div>
     )

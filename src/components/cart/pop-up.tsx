@@ -30,7 +30,7 @@ export default function CartPopup() {
                 <p className=" font-medium text-lg text-white">عرض السلة</p>
             </div>
 
-            <span className="font-semibold text-sm text-white">{summary?.total?.toFixed(2)} ريال</span>
+            <span className="font-semibold text-sm text-white">{summary?.total?.toFixed(2)} ر.س</span>
         </Link>,
         document.getElementById("app-portal") as HTMLElement
     )

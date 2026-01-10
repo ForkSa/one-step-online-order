@@ -2,11 +2,11 @@ import { type UseQueryResult, useQuery } from "@tanstack/react-query"
 
 import { getStore } from "@/apis/store"
 
-export const STORE_QUERY_KEY = "store"
+export const RESTAURANT_MENU_QUERY_KEY = "restaurant-menu"
 
-export const useStore = (slug: string): UseQueryResult<StoreMenu, Error> => {
+export const useRestaurantMenu = (slug: string): UseQueryResult<RestaurantMenu, Error> => {
     return useQuery({
-        queryKey: [STORE_QUERY_KEY, slug],
+        queryKey: [RESTAURANT_MENU_QUERY_KEY, slug],
         queryFn: async () => {
             const response = await getStore(slug)
             return response?.data

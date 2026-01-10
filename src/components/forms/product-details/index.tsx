@@ -52,7 +52,7 @@ export default function ProductDetailsForm({ product, slug }: Props) {
     if (!product) {
         return (
             <div className="mt-6 container">
-                <p className="text-center text-gray-500">Product not found</p>
+                <p className="text-center text-gray-500">المنتج غير موجود</p>
             </div>
         )
     }

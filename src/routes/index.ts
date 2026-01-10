@@ -7,9 +7,9 @@ import SuccessPage from "@/pages/success"
 const NotFound = lazy(() => import("@/pages/not-found"))
 
 const Checkout = lazy(() => import("@/pages/checkout"))
-const Store = lazy(() => import("@/pages/store"))
-const StoreItems = lazy(() => import("@/pages/store/items"))
-const StoreProduct = lazy(() => import("@/pages/store/product"))
+const RestaurantPage = lazy(() => import("@/pages/restaurant"))
+const RestaurantItems = lazy(() => import("@/pages/restaurant/items"))
+const RestaurantProduct = lazy(() => import("@/pages/restaurant/product"))
 
 export const router = createBrowserRouter([
     {
@@ -17,19 +17,19 @@ export const router = createBrowserRouter([
         Component: Layout,
         children: [
             {
-                path: "store/:slug",
+                path: "restaurant/:slug",
                 children: [
                     {
                         path: "",
-                        Component: Store,
+                        Component: RestaurantPage,
                     },
                     {
                         path: "items",
-                        Component: StoreItems,
+                        Component: RestaurantItems,
                     },
                     {
                         path: "product/:id",
-                        Component: StoreProduct,
+                        Component: RestaurantProduct,
                     },
                 ],
             },

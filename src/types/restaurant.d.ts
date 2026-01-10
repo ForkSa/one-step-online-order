@@ -1,4 +1,4 @@
-interface StoreMenu {
+interface RestaurantMenu {
     organization: Organization
     branches: Branch[]
     auto_selected_branch: Branch | null

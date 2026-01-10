@@ -52,7 +52,7 @@ export default function CartCard({ className, item }: Readonly<Props>) {
 
             <div className="flex gap-x-2 mt-3">
                 <Button variant="outline" className="text-chart-5 h-11 flex-1" asChild>
-                    <Link to={`/store/${slug}/product/${item?.product_id}`}>
+                    <Link to={`/restaurant/${slug}/product/${item?.product_id}`}>
                         <PencilIcon className="size-4" />
                         تعديل
                     </Link>
