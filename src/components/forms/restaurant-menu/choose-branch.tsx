@@ -38,16 +38,34 @@ export default function ChooseBranchForm({ loading = false, branches, slug }: Ch
     })
 
     useEffect(() => {
-        let timeout: NodeJS.Timeout
+        // Auto-select if there's only one branch
+        if (branches?.length === 1) {
+            const singleBranch = branches[0]
+            const branchId = singleBranch?.id?.toString() ?? ""
+            const branchName = singleBranch?.name?.ar ?? ""
 
-        if (storeInfo?.branch?.id) {
+            form.setValue("branchId", branchId)
+
+            setStoreInfo({
+                branch: {
+                    id: branchId,
+                    name: branchName,
+                },
+                slug,
+            })
+            return
+        }
+
+        let timeout: NodeJS.Timeout
+        // Restore previously selected branch if available
+        if (storeInfo?.branch?.id && branches?.length > 1) {
             timeout = setTimeout(() => {
                 form.setValue("branchId", storeInfo?.branch?.id ?? "")
             }, 0)
         }
 
         return () => clearTimeout(timeout)
-    }, [storeInfo?.branch?.id, form])
+    }, [storeInfo?.branch?.id, form, branches, setStoreInfo, slug])
 
     async function onSubmit(inputs: ChooseBranchFormValues) {
         try {
@@ -83,6 +101,7 @@ export default function ChooseBranchForm({ loading = false, branches, slug }: Ch
                                             onValueChange={field?.onChange}
                                             dir="rtl"
                                             value={field?.value ?? undefined}
+                                            disabled={branches?.length === 1}
                                         >
                                             <FormControl>
                                                 <SelectTrigger className="w-full border-none bg-white-200 !p-6">
