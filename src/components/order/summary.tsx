@@ -11,7 +11,7 @@ type Props = {
 export default function OrderSummary({ className }: Props) {
     const summary = useAtomValue(cartSummary)
 
-    const itemCount = summary?.itemCount ?? 0
+    const itemCount = summary?.items?.length ?? 0
     const subtotal = summary?.subtotal ?? 0
     const tax = summary?.tax ?? 0
     const total = summary?.total ?? 0
