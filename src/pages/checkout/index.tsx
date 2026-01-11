@@ -27,16 +27,16 @@ export default function Checkout() {
     }
 
     return (
-        <div className=" relative w-full min-h-screen bg-gray-50 pb-6">
-            <div className=" container flex items-center md:gap-x-[800px] gap-x-[144px] pt-[60px]">
+        <div className="bg-gray-50 py-10">
+            <div className="container relative">
                 <button
                     onClick={() => navigate(-1)}
-                    className="rounded-lg py-2.5 px-3 bg-white"
+                    className="absolute start-4 top-1/2 -translate-y-1/2 z-10 rounded-lg py-2.5 size-9 grid place-items-center bg-white"
                     aria-label="Back to menu"
                 >
-                    <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
+                    <ChevronRight className="size-6 -mt-1" />
                 </button>
-                <h1 className="text-2xl font-bold  ">السلة</h1>
+                <h1 className="text-center">السلة</h1>
             </div>
 
             <div className="container md:mt-[180px] mt-[27px] grid md:grid-cols-2 grid-cols-1 gap-4">
