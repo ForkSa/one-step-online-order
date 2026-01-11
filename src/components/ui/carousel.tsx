@@ -1,7 +1,5 @@
 import type { EmblaCarouselType } from "embla-carousel"
 import useEmblaCarousel, { type UseEmblaCarouselType } from "embla-carousel-react"
-// import ArrowRightIcon from "@/assets/icons/gradients/arrow-right.svg"
-// import useTextDirection from "@/hooks/use-text-direction"
 import { ArrowRightCircle } from "lucide-react"
 
 import * as React from "react"
@@ -144,7 +142,7 @@ const CarouselContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HT
     ({ className, ...props }, ref) => {
         const { carouselRef, orientation } = useCarousel()
         return (
-            <div ref={carouselRef}>
+            <div ref={carouselRef} className="overflow-hidden">
                 <div
                     ref={ref}
                     className={cn("flex gap-1", orientation === "vertical" ? "flex-col" : "flex-row", className)}
