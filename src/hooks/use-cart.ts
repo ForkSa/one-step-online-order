@@ -2,21 +2,69 @@ import { useMutation } from "@tanstack/react-query"
 import { useAtom, useAtomValue } from "jotai"
 import { toast } from "sonner"
 
+import { useNavigate } from "react-router"
+
 import { validateCart } from "@/apis/cart"
 import { cartSummary, storeInfoAtom } from "@/atoms"
 
-export const useValidateCart = () => {
+export type UpdateCartInputsType = {
+    product_id: number
+    quantity?: number
+    notes?: string
+    difference_id?: number | string
+    addons?: { addon_id?: number | string; quantity?: number }[]
+    index: number
+}
+
+export const useUpdateCart = () => {
+    const [summary, setSummary] = useAtom(cartSummary)
+    const branchInfo = useAtomValue(storeInfoAtom)
+    const { slug } = useAtomValue(storeInfoAtom)
+    const navigate = useNavigate()
+
+    const updateCartMutation = useMutation({
+        mutationFn: async (inputs: UpdateCartInputsType) => {
+            if (!slug) {
+                throw new Error("Store slug is required")
+            }
+
+            const mappedInputs = mapUpdateCartInputs({
+                summaryItems: summary?.items ?? [],
+                branchId: branchInfo?.branch?.id ?? "",
+                ...inputs,
+            })
+
+            const response = await validateCart(mappedInputs, slug)
+
+            return response
+        },
+        onSuccess: (data: ApiResponse<OrderSummaryResponseType>) => {
+            setSummary(data?.data?.summary)
+            navigate("/checkout")
+            toast.success("تم تحديث السلة")
+        },
+        onError: (error: Error) => {
+            // eslint-disable-next-line no-console
+            console.log(error)
+            toast.error("حدث خطأ ما تأكد من المنتج")
+        },
+    })
+
+    return updateCartMutation
+}
+
+export const useAddItemToCart = () => {
     const [summary, setSummary] = useAtom(cartSummary)
     const branchInfo = useAtomValue(storeInfoAtom)
     const { slug } = useAtomValue(storeInfoAtom)
 
-    const validateCartMutation = useMutation({
+    const addItemToCart = useMutation({
         mutationFn: async ({ product }: { product: ValidateCartItemType }) => {
             if (!slug) {
                 throw new Error("Store slug is required")
             }
 
-            const mappedInputs = mapValidateCartInputs({
+            const mappedInputs = mapAddItemToCart({
                 summaryItems: summary?.items ?? [],
                 product,
                 branchId: branchInfo?.branch?.id ?? "",
@@ -37,63 +85,53 @@ export const useValidateCart = () => {
         },
     })
 
-    return validateCartMutation
+    return addItemToCart
 }
 
-export const useUpdateCart = () => {
-    const [summary, setSummary] = useAtom(cartSummary)
-    const branchInfo = useAtomValue(storeInfoAtom)
-    const { slug } = useAtomValue(storeInfoAtom)
+type MapUpdateCartInputs = {
+    summaryItems: OrderSummaryItemType[]
+    branchId: string
+} & UpdateCartInputsType
 
-    const updateCartMutation = useMutation({
-        mutationFn: async ({ itemId, quantity }: { itemId: string; quantity: number }) => {
-            if (!slug) {
-                throw new Error("Store slug is required")
-            }
-
-            const mappedInputs = mapUpdateCartInputs({
-                summaryItems: summary?.items ?? [],
-                itemId,
-                quantity,
-                branchId: branchInfo?.branch?.id ?? "",
-            })
-
-            const response = await validateCart(mappedInputs, slug)
-
-            return response
-        },
-        onSuccess: (data: ApiResponse<OrderSummaryResponseType>) => {
-            setSummary(data?.data?.summary)
-            toast.success("تم تحديث السلة")
-        },
-        onError: (error: Error) => {
-            // eslint-disable-next-line no-console
-            console.log(error)
-            toast.error("حدث خطأ ما تأكد من المنتج")
-        },
-    })
-
-    return updateCartMutation
-}
-
+/**
+ * Maps the input data to the format required for the validateCart API.
+ *
+ * @param {MapUpdateCartInputs} params - The input data.
+ * @param {OrderSummaryItemType[]} params.summaryItems - The existing items in the cart.
+ * @param {string} params.branchId - The ID of the branch.
+ * @param {number} params.product_id - The ID of the product to be updated.
+ * @param {number} [params.quantity] - The new quantity of the product.
+ * @param {string} [params.notes] - The new notes of the product.
+ * @param {number|string} [params.difference_id] - The new difference ID of the product.
+ * @param {{ addon_id: number|string; quantity?: number }[]} [params.addons] - The new addons of the product.
+ * @param {number} [params.index] - The index of the item to be updated in the summary items.
+ * @returns {ValidateCartInputs} The mapped data.
+ */
 const mapUpdateCartInputs = ({
     summaryItems,
-    itemId,
-    quantity,
     branchId,
-}: {
-    summaryItems: OrderSummaryItemType[]
-    itemId: string
-    quantity: number
-    branchId: string
-}) => {
-    const items: ValidateCartItemType[] = summaryItems?.map((item) => {
+    product_id,
+    quantity,
+    notes,
+    difference_id,
+    addons,
+    index,
+}: MapUpdateCartInputs) => {
+    const items: ValidateCartItemType[] = summaryItems?.map((item, itemIndex) => {
+        const isMatchingItem = item?.product_id === Number(product_id) && (index === undefined || itemIndex === index)
+
         return {
             product_id: item?.product_id,
-            quantity: item?.product_id === Number(itemId) ? quantity : item?.quantity,
-            note: item?.notes ?? "",
-            ...(item.difference_id !== null && { difference_id: item.difference_id }),
-            addons: item.addons?.map((addon) => ({ addon_id: addon.addon_id, quantity: addon?.quantity })) ?? [],
+            quantity: isMatchingItem && quantity !== undefined ? quantity : item?.quantity,
+            notes: isMatchingItem && notes !== undefined ? notes : item?.notes,
+            ...(isMatchingItem && difference_id !== undefined
+                ? { difference_id }
+                : item.difference_id !== null && { difference_id: item.difference_id }),
+            addons:
+                isMatchingItem && addons !== undefined
+                    ? addons.map((addon) => ({ addon_id: addon.addon_id, quantity: addon?.quantity ?? 1 }))
+                    : (item.addons?.map((addon) => ({ addon_id: addon.addon_id, quantity: addon?.quantity ?? 1 })) ??
+                      []),
         }
     })
 
@@ -103,7 +141,16 @@ const mapUpdateCartInputs = ({
     }
 }
 
-const mapValidateCartInputs = ({
+/**
+ * Maps the input data to the format required for the validateCart API.
+ *
+ * @param {Object} params - The input data.
+ * @param {OrderSummaryItemType[]} params.summaryItems - The existing items in the cart.
+ * @param {ValidateCartItemType} params.product - The product to be added to the cart.
+ * @param {string} params.branchId - The ID of the branch.
+ * @returns {Object} The mapped data.
+ */
+const mapAddItemToCart = ({
     summaryItems,
     product,
     branchId,
@@ -112,59 +159,21 @@ const mapValidateCartInputs = ({
     product: ValidateCartItemType
     branchId: string
 }) => {
-    const dampData = summaryItems
+    const cartItems = summaryItems ?? []
 
-    let items: ValidateCartItemType[] = []
+    const mapItem = (item: ValidateCartItemType | OrderSummaryItemType): ValidateCartItemType => ({
+        product_id: item.product_id,
+        quantity: item.quantity ?? 1,
+        notes: item.notes ?? "",
+        ...(item.difference_id != null && { difference_id: item.difference_id }),
+        addons:
+            item.addons?.map((addon) => ({
+                addon_id: addon.addon_id,
+                quantity: addon.quantity ?? 1,
+            })) ?? [],
+    })
 
-    // if there are items in the cart, update the existing product
-    if (dampData?.length > 0) {
-        const findItem = dampData?.find((item) => item?.product_id === product?.product_id)
-
-        items = dampData?.map((item) => {
-            // If this is the product being added, update it with new data and increase quantity
-            if (item?.product_id === product?.product_id) {
-                return {
-                    product_id: product.product_id,
-                    quantity: item.quantity + 1,
-                    notes: product?.notes ?? item?.notes,
-                    ...(product?.difference_id !== undefined && { difference_id: product?.difference_id }),
-                    addons: product?.addons?.map((addon) => ({ addon_id: addon.addon_id, quantity: 1 })) ?? [],
-                }
-            }
-            // Keep other items as they are, but convert to ValidateCartItemType format
-            return {
-                product_id: item?.product_id,
-                quantity: item?.quantity,
-                notes: item?.notes ?? "",
-                ...(item.difference_id !== null && { difference_id: item.difference_id }),
-                addons: item.addons?.map((addon) => ({ addon_id: addon.addon_id, quantity: addon?.quantity })) ?? [],
-            }
-        })
-
-        // If product doesn't exist in cart, add it
-        if (!findItem) {
-            items?.push({
-                product_id: product.product_id,
-                quantity: 1,
-                notes: product?.notes,
-                ...(product?.difference_id !== undefined && { difference_id: product?.difference_id }),
-                addons: product?.addons?.map((addon) => ({ addon_id: addon.addon_id, quantity: 1 })) ?? [],
-            })
-        }
-    }
-
-    // if there are no items in the cart, add the new product
-    if (dampData.length === 0) {
-        items = [
-            {
-                product_id: product?.product_id,
-                quantity: 1,
-                notes: product?.notes,
-                ...(product?.difference_id && { difference_id: product?.difference_id }),
-                addons: product?.addons?.map((addon) => ({ addon_id: addon.addon_id, quantity: 1 })),
-            },
-        ]
-    }
+    const items: ValidateCartItemType[] = [...cartItems.map(mapItem), mapItem(product)]
 
     return {
         branch_id: branchId,

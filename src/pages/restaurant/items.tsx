@@ -42,6 +42,10 @@ export default function RestaurantItems() {
                     <RestaurantCategories slug={slug as string} onChange={setActiveCategory} />
                 </Suspense>
 
+                {!isProductsLoading && products?.length === 0 && !isRestaurantMenuLoading && (
+                    <p className="mt-6 text-lg font-semibold text-red-500 text-center">لا يوجد منتجات</p>
+                )}
+
                 <div className="flex flex-col mt-3">
                     {(isProductsLoading || isRestaurantMenuLoading) &&
                         Array.from({ length: 3 }).map((_, index) => <RestaurantProductCardSkeleton key={index} />)}

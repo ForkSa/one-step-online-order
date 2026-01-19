@@ -41,7 +41,8 @@ export default [
             "react-hooks/exhaustive-deps": "warn",
             "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
             "@tanstack/query/exhaustive-deps": "error",
-            "no-console": ["warn", { allow: ["error"] }],
+            "eslint-comments/no-unused-disable": "off",
+            "no-console": "warn",
         },
     },
 ]

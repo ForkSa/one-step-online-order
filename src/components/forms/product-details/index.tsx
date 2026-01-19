@@ -3,6 +3,7 @@ import { useAtomValue } from "jotai"
 
 import { Suspense, lazy } from "react"
 import { useForm } from "react-hook-form"
+import { useSearchParams } from "react-router"
 
 import { ButtonWithLoading } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
@@ -12,7 +13,7 @@ import ProductDetailsAddons from "@/components/forms/product-details/Addons"
 import ProductDetailsDifferences from "@/components/forms/product-details/differences"
 import ProductDetailsNoteDialog from "@/components/forms/product-details/note-dialog"
 import { type ProductDetailsSchema, createProductDetailsSchema } from "@/components/forms/product-details/schema"
-import { useValidateCart } from "@/hooks/use-cart"
+import { useAddItemToCart, useUpdateCart } from "@/hooks/use-cart"
 
 const CartPopup = lazy(() => import("@/components/cart/pop-up"))
 interface Props {
@@ -24,7 +25,13 @@ export default function ProductDetailsForm({ product, slug }: Props) {
     const hasDifferences = (product?.differences?.length ?? 0) > 0 || false
     const summary = useAtomValue(cartSummary)
 
-    const findSummaryItem = summary?.items?.find((item) => item?.product_id === product?.id)
+    const [searchParams] = useSearchParams()
+    const cartIndex = searchParams.get("index")
+    const isEdit = searchParams.get("isEdit")
+
+    const findSummaryItem = isEdit
+        ? summary?.items?.find((item, index) => item?.product_id === product?.id && index === Number(cartIndex))
+        : undefined
 
     const form = useForm<ProductDetailsSchema>({
         resolver: zodResolver(createProductDetailsSchema(hasDifferences)),
@@ -35,11 +42,27 @@ export default function ProductDetailsForm({ product, slug }: Props) {
         },
     })
 
-    const { mutate: validateCart, isPending } = useValidateCart()
+    const { mutate: addItemToCart, isPending } = useAddItemToCart()
+    const { mutate: updateCart, isPending: isUpdating } = useUpdateCart()
+
+    const isSubmitting = isPending || isUpdating
+    const buttonText = findSummaryItem && isEdit ? "تعديل السلة" : "إضافة الى السلة"
 
     const onSubmit = (inputs: ProductDetailsSchema) => {
         if (!inputs || !slug) return
-        validateCart({
+
+        if (isEdit) {
+            updateCart({
+                product_id: product?.id ?? 0,
+                notes: inputs?.notes,
+                difference_id: inputs?.variation,
+                addons: inputs?.addons?.map((addon) => ({ addon_id: addon ?? 0 })) ?? [],
+                index: Number(cartIndex),
+            })
+            return
+        }
+
+        addItemToCart({
             product: {
                 product_id: product?.id ?? 0,
                 notes: inputs?.notes,
@@ -107,8 +130,8 @@ export default function ProductDetailsForm({ product, slug }: Props) {
                             className="mt-6"
                         />
 
-                        <ButtonWithLoading loading={isPending} type="submit" className="w-full mt-6">
-                            إضافة إلى السلة
+                        <ButtonWithLoading loading={isSubmitting} type="submit" className="w-full mt-6">
+                            {buttonText}
                         </ButtonWithLoading>
                     </div>
                 </form>

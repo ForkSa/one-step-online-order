@@ -1,6 +1,7 @@
 import { useAtomValue } from "jotai"
 import { PencilIcon } from "lucide-react"
 
+import { useMemo } from "react"
 import { Link } from "react-router"
 
 import { cn } from "@/lib/utils"
@@ -14,25 +15,31 @@ import { useUpdateCart } from "@/hooks/use-cart"
 type Props = {
     className?: string
     item: OrderSummaryItemType
+    index: number
 }
 
-export default function CartCard({ className, item }: Readonly<Props>) {
+export default function CartCard({ className, item, index }: Readonly<Props>) {
     const { slug } = useAtomValue(storeInfoAtom)
     const { mutate: updateCart, isPending } = useUpdateCart()
 
     const handleQuantityChange = (value: number) => {
         updateCart({
-            itemId: item?.product_id.toString(),
+            product_id: Number(item?.product_id),
             quantity: value,
+            index,
         })
     }
+
+    const onEditCartItem = useMemo(() => {
+        return `/restaurant/${slug}/product/${item?.product_id}?isEdit=true&productId=${item?.product_id}&index=${index}`
+    }, [slug, item, index])
 
     return (
         <div className={cn("p-4", className)}>
             <div className="flex gap-x-3">
                 <img
                     src={item?.product_image}
-                    alt={""}
+                    alt={item?.product_name}
                     className="size-18 aspect-square object-cover rounded-2xl shrink-0"
                 />
 
@@ -52,7 +59,7 @@ export default function CartCard({ className, item }: Readonly<Props>) {
 
             <div className="flex gap-x-2 mt-3">
                 <Button variant="outline" className="text-chart-5 h-11 flex-1" asChild>
-                    <Link to={`/restaurant/${slug}/product/${item?.product_id}`}>
+                    <Link to={onEditCartItem}>
                         <PencilIcon className="size-4" />
                         تعديل
                     </Link>

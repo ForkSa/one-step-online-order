@@ -24,7 +24,7 @@ export const PayTypesArray = [
         icon: CashIcon,
     },
     {
-        label: "محفظة",
+        label: "كاش وفيزا",
         value: payTypes.WALLET,
         icon: WalletIcon,
     },

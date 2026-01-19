@@ -50,6 +50,7 @@ export default function CartDetails({ className }: Readonly<Props>) {
                         key={item.product_id}
                         item={item}
                         className={cn(items.length > index + 1 && "border-b border-gray-200")}
+                        index={index}
                     />
                 ))}
             </div>

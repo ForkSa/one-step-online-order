@@ -68,6 +68,7 @@ export const apiClient = async <T>(options: options): Promise<T> => {
 
         return response
     } catch (error) {
+        // eslint-disable-next-line no-console
         console.error(error)
         return Promise.reject(error)
     }

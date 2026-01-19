@@ -81,12 +81,17 @@ export default function ChooseBranchForm({ loading = false, branches, slug }: Ch
 
             navigate(`/restaurant/${slug}/items`)
         } catch (error) {
+            // eslint-disable-next-line no-console
             console.error("Error:", error)
         }
     }
 
+    if (!currentBranches?.length) {
+        return <p className="container mt-6 text-lg font-semibold text-red-500 text-center">لا يوجد فروع</p>
+    }
+
     return (
-        <div className="container  mt-6 space-y-6">
+        <div className="container mt-6 space-y-6">
             <Form {...form}>
                 <FormLoading loading={loading}>
                     <form onSubmit={form.handleSubmit(onSubmit)}>
