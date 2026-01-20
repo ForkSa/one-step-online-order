@@ -22,6 +22,7 @@ type OrderSummaryItemType = {
     total: number
     notes: string
     product_image: string
+    difference_name: string
 }
 
 type OrderSummaryAddonType = {
