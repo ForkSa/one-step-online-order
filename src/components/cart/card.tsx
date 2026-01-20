@@ -57,6 +57,22 @@ export default function CartCard({ className, item, index }: Readonly<Props>) {
                 </div>
             </div>
 
+            {item?.addons?.length > 0 && (
+                <div className="mt-4">
+                    <p className="text-sm font-medium">الاضافات :</p>
+
+                    <div className="mt-2">
+                        <ul className="grid grid-cols-2 gap-2 text-sm">
+                            {item?.addons?.map((addon) => (
+                                <li key={addon?.addon_id} className="py-1 rounded-md">
+                                    - {addon?.name} x<span className="font-bold">{addon?.quantity}</span>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                </div>
+            )}
+
             <div className="flex gap-x-2 mt-3">
                 <Button variant="outline" className="text-chart-5 h-11 flex-1" asChild>
                     <Link to={onEditCartItem}>

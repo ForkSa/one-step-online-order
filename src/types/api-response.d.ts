@@ -5,22 +5,16 @@ interface ApiResponse<T> {
 }
 
 interface PageInfo {
-    currentPage: number
-    nextPage: number | null
-    nextPageUrl: string | null
-    previousPageUrl: string | null
-    onFirstPage: boolean
-    perPage: number
-    hasMorePages: boolean
-    lastPage: number
+    current_page: number
+    has_more: boolean
+    last_page: number
+    per_page: number
     total: number
 }
 
 interface PaginatedApiResponse<T> {
     data: T[]
-    pageInfo: PageInfo
-    message: string
-    statue: number
+    pagination: PageInfo
 }
 
 interface ErrorResponse {

@@ -26,3 +26,12 @@ interface LocalizedName {
     ar: string
     en: string
 }
+
+type RestaurantType = {
+    id: string
+    name: string
+    logo: string
+    cover_image: string
+    slug: string
+    menu_url: string
+}

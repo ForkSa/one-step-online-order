@@ -34,31 +34,33 @@ export default function ProductDetailsAddons({ product, className, onChange, val
                 }}
                 className="w-full"
             >
-                <CarouselContent className="mt-3">
-                    {addons.map((addOn: Addon) => {
-                        return (
-                            <CarouselItem key={addOn.id} className="pl-2 md:pl-3 basis-auto">
-                                <label
-                                    htmlFor={`addon-${addOn.id}`}
-                                    className="flex items-center gap-x-4 border border-gray-150 rounded-xl px-3 py-2"
-                                >
-                                    <div className="flex flex-col gap-y-2">
-                                        <p className="text-sm font-semibold text-gray-700">{addOn?.name?.ar}</p>
-                                        <p className="text-xs font-semibold text-secondary">{addOn?.price} ر.س</p>
-                                    </div>
-                                    <Checkbox
-                                        id={`addon-${addOn.id}`}
-                                        className="shrink-0"
-                                        checked={value?.includes(addOn?.id)}
-                                        onCheckedChange={(checked) => {
-                                            handleChange(checked as boolean, addOn?.id)
-                                        }}
-                                    />
-                                </label>
-                            </CarouselItem>
-                        )
-                    })}
-                </CarouselContent>
+                <div className="grid">
+                    <CarouselContent className="mt-3">
+                        {addons.map((addOn: Addon) => {
+                            return (
+                                <CarouselItem key={addOn.id} className="pl-2 md:pl-3 basis-auto">
+                                    <label
+                                        htmlFor={`addon-${addOn.id}`}
+                                        className="flex items-center gap-x-4 border border-gray-150 rounded-xl px-3 py-2"
+                                    >
+                                        <div className="flex flex-col gap-y-2">
+                                            <p className="text-sm font-semibold text-gray-700">{addOn?.name?.ar}</p>
+                                            <p className="text-xs font-semibold text-secondary">{addOn?.price} ر.س</p>
+                                        </div>
+                                        <Checkbox
+                                            id={`addon-${addOn.id}`}
+                                            className="shrink-0"
+                                            checked={value?.includes(addOn?.id)}
+                                            onCheckedChange={(checked) => {
+                                                handleChange(checked as boolean, addOn?.id)
+                                            }}
+                                        />
+                                    </label>
+                                </CarouselItem>
+                            )
+                        })}
+                    </CarouselContent>
+                </div>
             </Carousel>
         </div>
     )

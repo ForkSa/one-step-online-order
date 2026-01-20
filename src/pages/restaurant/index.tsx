@@ -19,7 +19,7 @@ export default function RestaurantPage() {
     return (
         <main>
             {isLoading && <RestaurantHeroSkeleton />}
-            {!isLoading && data && <RestaurantHero restaurant={data} backTo="#" />}
+            {!isLoading && data && <RestaurantHero restaurant={data} backTo="/" />}
 
             <div className="flex flex-col items-center gap-y-4 px-6 mt-10 ">
                 <img src={welcomeImage} loading="lazy" alt="welcome" className="size-40 object-cover" />

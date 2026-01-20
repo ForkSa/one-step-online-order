@@ -1,8 +1,11 @@
+import Hero from "@/components/hero"
+import RestaurantList from "@/components/restaurant/list"
+
 export default function CategoriesSection() {
     return (
-        <section className="py-4  container ">
-            <h1 className=" text-8xl  font-bold"> الرئيسة</h1>
-            <div className=""></div>
+        <section>
+            <Hero />
+            <RestaurantList className="mt-6" />
         </section>
     )
 }
