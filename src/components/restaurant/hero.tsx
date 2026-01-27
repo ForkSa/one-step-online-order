@@ -1,10 +1,12 @@
-import { ChevronRight } from "lucide-react"
+import { ChevronRight, HomeIcon } from "lucide-react"
 
 import { Link } from "react-router"
 
 import { Skeleton } from "@/components/ui/skeleton"
 
 import FakeImage from "@/assets/images/fake-image.webp"
+import { storeInfoAtom } from "@/atoms"
+import { useSetAtom } from "jotai"
 
 interface Props {
     restaurant: RestaurantMenu
@@ -12,16 +14,31 @@ interface Props {
 }
 
 export default function RestaurantHero({ restaurant, backTo }: Props) {
+    const setStoreInfo = useSetAtom(storeInfoAtom)
+
+    const onBackAction = () => {
+        setStoreInfo({
+            branch: null,
+            slug: undefined,
+        })
+    }
+
     return (
         <div>
             <div className="relative">
-                <Link
-                    to={backTo}
-                    className="absolute start-4 top-6 z-10 rounded-lg py-2.5 size-9 grid place-items-center bg-white"
-                    aria-label="Back to menu"
-                >
-                    <ChevronRight className="size-6 -mt-1" />
-                </Link>
+                <div className="absolute start-0 top-6 flex items-center justify-between w-full gap-x-2 px-4">
+                    <Link
+                        to={backTo}
+                        className="z-10 rounded-lg py-2.5 size-9 grid place-items-center bg-white"
+                        aria-label="Back to menu"
+                    >
+                        <ChevronRight className="size-6 -mt-1" />
+                    </Link>
+                    <Link to="/" onClick={onBackAction} className="grid place-items-center size-10 bg-white rounded-full shadow-sm">
+                        <HomeIcon className="size-6" />
+                    </Link>
+                 
+                </div>
 
                 <img
                     src={restaurant?.organization?.cover_image ?? FakeImage}

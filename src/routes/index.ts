@@ -3,6 +3,7 @@ import { createBrowserRouter } from "react-router"
 
 import Layout from "@/layouts"
 import SuccessPage from "@/pages/success"
+import { clientLoader } from "@/pages/restaurant/loader"
 
 const NotFound = lazy(() => import("@/pages/not-found"))
 
@@ -27,6 +28,7 @@ export const router = createBrowserRouter([
                     {
                         path: "",
                         Component: RestaurantPage,
+                        loader: clientLoader,
                     },
                     {
                         path: "items",
@@ -48,6 +50,10 @@ export const router = createBrowserRouter([
             },
             {
                 path: "*",
+                Component: NotFound,
+            },
+            {
+                path: "not-found",
                 Component: NotFound,
             },
         ],
