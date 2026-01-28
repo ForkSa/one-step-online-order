@@ -2,8 +2,8 @@ import { lazy } from "react"
 import { createBrowserRouter } from "react-router"
 
 import Layout from "@/layouts"
-import SuccessPage from "@/pages/success"
 import { clientLoader } from "@/pages/restaurant/loader"
+import SuccessPage from "@/pages/success"
 
 const NotFound = lazy(() => import("@/pages/not-found"))
 

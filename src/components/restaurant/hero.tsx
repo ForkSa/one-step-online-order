@@ -1,3 +1,4 @@
+import { useSetAtom } from "jotai"
 import { ChevronRight, HomeIcon } from "lucide-react"
 
 import { Link } from "react-router"
@@ -6,7 +7,6 @@ import { Skeleton } from "@/components/ui/skeleton"
 
 import FakeImage from "@/assets/images/fake-image.webp"
 import { storeInfoAtom } from "@/atoms"
-import { useSetAtom } from "jotai"
 
 interface Props {
     restaurant: RestaurantMenu
@@ -34,10 +34,13 @@ export default function RestaurantHero({ restaurant, backTo }: Props) {
                     >
                         <ChevronRight className="size-6 -mt-1" />
                     </Link>
-                    <Link to="/" onClick={onBackAction} className="grid place-items-center size-10 bg-white rounded-full shadow-sm">
+                    <Link
+                        to="/"
+                        onClick={onBackAction}
+                        className="grid place-items-center size-10 bg-white rounded-full shadow-sm"
+                    >
                         <HomeIcon className="size-6" />
                     </Link>
-                 
                 </div>
 
                 <img

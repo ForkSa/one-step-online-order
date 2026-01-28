@@ -70,7 +70,7 @@ export const mapCheckoutInputs = (
         items: summary?.items?.map((item) => ({
             product_id: item?.product_id,
             quantity: item?.quantity ?? 1,
-            note: item?.notes ?? "",
+            notes: item?.notes ?? "",
             ...(item?.difference_id !== null && { difference_id: item?.difference_id }),
             addons: item.addons?.map((addon) => ({ addon_id: addon.addon_id, quantity: addon.quantity })) ?? [],
         })),

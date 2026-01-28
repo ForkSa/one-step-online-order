@@ -1,4 +1,4 @@
-import { redirect, type LoaderFunction } from "react-router"
+import { type LoaderFunction, redirect } from "react-router"
 
 import { getStore } from "@/apis/store"
 import { jotaiStore, storeInfoAtom } from "@/atoms"
@@ -7,28 +7,28 @@ export const clientLoader: LoaderFunction = async ({ params }) => {
     try {
         const { slug } = params
 
-    const response = await getStore(slug as string)
-    const data = response?.data
+        const response = await getStore(slug as string)
+        const data = response?.data
 
-    if (!data) return redirect("/not-found")
+        if (!data) return redirect("/not-found")
 
-    const branches = data?.branches ?? []
+        const branches = data?.branches ?? []
 
-    if (branches?.length === 1) {
-        const branch = branches[0]
-        
-        jotaiStore.set(storeInfoAtom, {
-            branch: {
-                id: branch.id.toString(),
-                name: branch.name?.ar ?? "",
-            },
-            slug,
-        })
+        if (branches?.length === 1) {
+            const branch = branches[0]
 
-        return redirect(`/restaurant/${slug}/items`)
-    }
+            jotaiStore.set(storeInfoAtom, {
+                branch: {
+                    id: branch.id.toString(),
+                    name: branch.name?.ar ?? "",
+                },
+                slug,
+            })
 
-    return data
+            return redirect(`/restaurant/${slug}/items`)
+        }
+
+        return data
     } catch {
         return redirect("/not-found")
     }
