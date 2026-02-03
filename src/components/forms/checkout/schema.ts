@@ -2,7 +2,7 @@ import { z } from "zod"
 
 import CashIcon from "@/assets/icons/cash"
 import MoneyIcon from "@/assets/icons/money"
-import WalletIcon from "@/assets/icons/wallet"
+//import WalletIcon from "@/assets/icons/wallet"
 
 export const payTypes = {
     CASH: "0",
@@ -23,11 +23,11 @@ export const PayTypesArray = [
         value: payTypes.CARD,
         icon: CashIcon,
     },
-    {
-        label: "كاش وفيزا",
-        value: payTypes.WALLET,
-        icon: WalletIcon,
-    },
+    // {
+    //     label: "كاش وفيزا",
+    //     value: payTypes.WALLET,
+    //     icon: WalletIcon,
+    // },
 ]
 
 export const checkoutFormSchema = z
