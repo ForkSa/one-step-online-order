@@ -2,6 +2,7 @@ import { z } from "zod"
 
 import CashIcon from "@/assets/icons/cash"
 import MoneyIcon from "@/assets/icons/money"
+
 //import WalletIcon from "@/assets/icons/wallet"
 
 export const payTypes = {

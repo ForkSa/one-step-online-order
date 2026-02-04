@@ -27,6 +27,11 @@ export default function CartCard({ className, item, index }: Readonly<Props>) {
             product_id: Number(item?.product_id),
             quantity: value,
             index,
+            addons:
+                item?.addons?.map((addon) => ({
+                    addon_id: addon?.addon_id,
+                    quantity: value,
+                })) ?? [],
         })
     }
 

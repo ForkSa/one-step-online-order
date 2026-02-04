@@ -64,8 +64,8 @@ export const mapCheckoutInputs = (
         order_type: "dine-in",
         table_number: inputs.tableNumber,
         payment_method: Number(inputs?.payType),
-        paid_with_cash: inputs?.payType == payTypes?.CASH ? summary?.total ?? 0 : 0,
-        paid_with_visa: inputs?.payType == payTypes?.CARD ? summary?.total ?? 0 : 0,
+        paid_with_cash: inputs?.payType == payTypes?.CASH ? (summary?.total ?? 0) : 0,
+        paid_with_visa: inputs?.payType == payTypes?.CARD ? (summary?.total ?? 0) : 0,
         branch_id: Number(branchId),
         order_note: "",
         items: summary?.items?.map((item) => ({

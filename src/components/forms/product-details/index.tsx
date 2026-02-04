@@ -56,7 +56,11 @@ export default function ProductDetailsForm({ product, slug }: Props) {
                 product_id: product?.id ?? 0,
                 notes: inputs?.notes,
                 difference_id: inputs?.variation,
-                addons: inputs?.addons?.map((addon) => ({ addon_id: addon ?? 0 })) ?? [],
+                addons:
+                    inputs?.addons?.map((addon) => ({
+                        addon_id: addon ?? 0,
+                        quantity: findSummaryItem?.quantity ?? 1,
+                    })) ?? [],
                 index: Number(cartIndex),
             })
             return
