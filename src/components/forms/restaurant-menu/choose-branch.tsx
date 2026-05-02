@@ -1,7 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useAtom } from "jotai"
+import { throttle } from "lodash-es"
 
-import { useEffect, useMemo } from "react"
+import { useCallback, useEffect, useMemo } from "react"
 import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router"
 
@@ -39,7 +40,6 @@ export default function ChooseBranchForm({ loading = false, branches, slug }: Ch
 
     useEffect(() => {
         let timeout: NodeJS.Timeout
-        // Restore previously selected branch if available
         if (storeInfo?.branch?.id && branches?.length > 1) {
             timeout = setTimeout(() => {
                 form.setValue("branchId", storeInfo?.branch?.id ?? "")
@@ -48,6 +48,20 @@ export default function ChooseBranchForm({ loading = false, branches, slug }: Ch
 
         return () => clearTimeout(timeout)
     }, [storeInfo?.branch?.id, form, branches, setStoreInfo, slug])
+
+    const handleScroll = useCallback(
+        throttle(
+            (e: React.UIEvent<HTMLDivElement>) => {
+                const target = e.target as HTMLDivElement
+                if (target.scrollTop + target.clientHeight >= target.scrollHeight - 10) {
+                    console.log("Reached bottom - trigger your low API call request here")
+                }
+            },
+            500,
+            { leading: true, trailing: false }
+        ),
+        []
+    )
 
     async function onSubmit(inputs: ChooseBranchFormValues) {
         try {
@@ -94,7 +108,7 @@ export default function ChooseBranchForm({ loading = false, branches, slug }: Ch
                                                     <SelectValue placeholder="اختر من هنا" />
                                                 </SelectTrigger>
                                             </FormControl>
-                                            <SelectContent>
+                                            <SelectContent onScrollCapture={handleScroll}>
                                                 {currentBranches?.map((branch) => (
                                                     <SelectItem
                                                         key={branch?.id.toString()}
