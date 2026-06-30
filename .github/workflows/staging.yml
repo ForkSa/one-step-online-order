@@ -20,9 +20,9 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.DEV_SERVER_SSH_KEY }}
           script: |
-            cd /var/www/onestep-stg/stg-one-step-online-order
+            cd /var/www/onestep-stg/stg-one-step-vendor-v2
             git stash 
             git pull origin staging
             pnpm i  
             pnpm run build
-            pm2 restart stg-one-step-online-order
+            pm2 restart stg-one-step-vendor-v2
