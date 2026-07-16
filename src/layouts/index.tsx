@@ -1,4 +1,5 @@
 import { NuqsAdapter } from "nuqs/adapters/react"
+import { Provider as JotaiProvider } from "jotai"
 
 import { Suspense } from "react"
 import { Provider as BusProvider } from "react-bus"
@@ -7,21 +8,24 @@ import { Outlet } from "react-router"
 import GlobalFallback from "@/components/ui/global-fallback"
 import { Toaster } from "@/components/ui/sonner"
 
+import { jotaiStore } from "@/atoms"
 import { TanstackProvider } from "@/components/global-provider/tanstack-provider"
 
 export default function Layout() {
     return (
         <main>
-            <BusProvider>
-                <NuqsAdapter>
-                    <TanstackProvider>
-                        <Suspense fallback={<GlobalFallback />}>
-                            <div className="min-h-screen overflow-x-hidden">{<Outlet />}</div>
-                        </Suspense>
-                        <Toaster />
-                    </TanstackProvider>
-                </NuqsAdapter>
-            </BusProvider>
+            <JotaiProvider store={jotaiStore}>
+                <BusProvider>
+                    <NuqsAdapter>
+                        <TanstackProvider>
+                            <Suspense fallback={<GlobalFallback />}>
+                                <div className="min-h-screen overflow-x-hidden">{<Outlet />}</div>
+                            </Suspense>
+                            <Toaster />
+                        </TanstackProvider>
+                    </NuqsAdapter>
+                </BusProvider>
+            </JotaiProvider>
             <Toaster />
         </main>
     )

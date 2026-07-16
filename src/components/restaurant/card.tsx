@@ -2,11 +2,12 @@ import { useSetAtom } from "jotai"
 
 import { Link } from "react-router"
 
+import { clearSessionId } from "@/lib/ordering-session"
 import { cn } from "@/lib/utils"
 
 import { Skeleton } from "@/components/ui/skeleton"
 
-import { cartSummary, storeInfoAtom } from "@/atoms"
+import { cartSummary, defaultStoreInfo, storeInfoAtom } from "@/atoms"
 
 type Props = {
     className?: string
@@ -18,10 +19,8 @@ export default function RestaurantCard({ className, restaurant }: Props) {
     const setCartSummary = useSetAtom(cartSummary)
 
     const onResetStoreInfo = () => {
-        setStoreInfo({
-            branch: null,
-            slug: undefined,
-        })
+        setStoreInfo(defaultStoreInfo)
+        clearSessionId()
 
         setCartSummary({
             items: [],

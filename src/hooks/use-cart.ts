@@ -6,6 +6,7 @@ import { useNavigate } from "react-router"
 
 import { validateCart } from "@/apis/cart"
 import { cartSummary, storeInfoAtom } from "@/atoms"
+import { buildQrPayload, mergeEntryIntoStoreInfo } from "@/lib/entry-context"
 
 export type UpdateCartInputsType = {
     product_id: number
@@ -18,7 +19,7 @@ export type UpdateCartInputsType = {
 
 export const useUpdateCart = () => {
     const [summary, setSummary] = useAtom(cartSummary)
-    const branchInfo = useAtomValue(storeInfoAtom)
+    const [storeInfo, setStoreInfo] = useAtom(storeInfoAtom)
     const { slug } = useAtomValue(storeInfoAtom)
     const navigate = useNavigate()
 
@@ -30,7 +31,7 @@ export const useUpdateCart = () => {
 
             const mappedInputs = mapUpdateCartInputs({
                 summaryItems: summary?.items ?? [],
-                branchId: branchInfo?.branch?.id ?? "",
+                storeInfo,
                 ...inputs,
             })
 
@@ -40,6 +41,11 @@ export const useUpdateCart = () => {
         },
         onSuccess: (data: ApiResponse<OrderSummaryResponseType>) => {
             setSummary(data?.data?.summary)
+
+            if (data?.data?.entry) {
+                setStoreInfo(mergeEntryIntoStoreInfo(storeInfo, data.data.entry))
+            }
+
             navigate("/checkout")
             toast.success("تم تحديث السلة")
         },
@@ -55,7 +61,7 @@ export const useUpdateCart = () => {
 
 export const useAddItemToCart = () => {
     const [summary, setSummary] = useAtom(cartSummary)
-    const branchInfo = useAtomValue(storeInfoAtom)
+    const [storeInfo, setStoreInfo] = useAtom(storeInfoAtom)
     const { slug } = useAtomValue(storeInfoAtom)
 
     const addItemToCart = useMutation({
@@ -67,7 +73,7 @@ export const useAddItemToCart = () => {
             const mappedInputs = mapAddItemToCart({
                 summaryItems: summary?.items ?? [],
                 product,
-                branchId: branchInfo?.branch?.id ?? "",
+                storeInfo,
             })
 
             const response = await validateCart(mappedInputs, slug)
@@ -76,6 +82,11 @@ export const useAddItemToCart = () => {
         },
         onSuccess: (data: ApiResponse<OrderSummaryResponseType>) => {
             setSummary(data?.data?.summary)
+
+            if (data?.data?.entry) {
+                setStoreInfo(mergeEntryIntoStoreInfo(storeInfo, data.data.entry))
+            }
+
             toast.success("تم إضافة المنتج إلى السلة")
         },
         onError: (error: Error) => {
@@ -90,33 +101,19 @@ export const useAddItemToCart = () => {
 
 type MapUpdateCartInputs = {
     summaryItems: OrderSummaryItemType[]
-    branchId: string
+    storeInfo: import("@/atoms").StoreInfo
 } & UpdateCartInputsType
 
-/**
- * Maps the input data to the format required for the validateCart API.
- *
- * @param {MapUpdateCartInputs} params - The input data.
- * @param {OrderSummaryItemType[]} params.summaryItems - The existing items in the cart.
- * @param {string} params.branchId - The ID of the branch.
- * @param {number} params.product_id - The ID of the product to be updated.
- * @param {number} [params.quantity] - The new quantity of the product.
- * @param {string} [params.notes] - The new notes of the product.
- * @param {number|string} [params.difference_id] - The new difference ID of the product.
- * @param {{ addon_id: number|string; quantity?: number }[]} [params.addons] - The new addons of the product.
- * @param {number} [params.index] - The index of the item to be updated in the summary items.
- * @returns {ValidateCartInputs} The mapped data.
- */
 const mapUpdateCartInputs = ({
     summaryItems,
-    branchId,
+    storeInfo,
     product_id,
     quantity,
     notes,
     difference_id,
     addons,
     index,
-}: MapUpdateCartInputs) => {
+}: MapUpdateCartInputs): ValidateCartInputs => {
     const items: ValidateCartItemType[] = summaryItems?.map((item, itemIndex) => {
         const isMatchingItem = item?.product_id === Number(product_id) && (index === undefined || itemIndex === index)
 
@@ -136,29 +133,20 @@ const mapUpdateCartInputs = ({
     })
 
     return {
-        branch_id: branchId,
+        ...buildQrPayload(storeInfo),
         items,
     }
 }
 
-/**
- * Maps the input data to the format required for the validateCart API.
- *
- * @param {Object} params - The input data.
- * @param {OrderSummaryItemType[]} params.summaryItems - The existing items in the cart.
- * @param {ValidateCartItemType} params.product - The product to be added to the cart.
- * @param {string} params.branchId - The ID of the branch.
- * @returns {Object} The mapped data.
- */
 const mapAddItemToCart = ({
     summaryItems,
     product,
-    branchId,
+    storeInfo,
 }: {
     summaryItems: OrderSummaryItemType[]
     product: ValidateCartItemType
-    branchId: string
-}) => {
+    storeInfo: import("@/atoms").StoreInfo
+}): ValidateCartInputs => {
     const cartItems = summaryItems ?? []
 
     const mapItem = (item: ValidateCartItemType | OrderSummaryItemType): ValidateCartItemType => ({
@@ -176,7 +164,7 @@ const mapAddItemToCart = ({
     const items: ValidateCartItemType[] = [...cartItems.map(mapItem), mapItem(product)]
 
     return {
-        branch_id: branchId,
+        ...buildQrPayload(storeInfo),
         items,
     }
 }

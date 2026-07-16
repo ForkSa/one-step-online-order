@@ -1,4 +1,5 @@
 type OrderSummaryResponseType = {
+    entry: EntryContextData
     summary: OrderSummaryType
 }
 
@@ -43,6 +44,8 @@ type ValidateCartItemType = {
     addons: { addon_id?: number | string; quantity?: number | undefined }[]
 }
 type ValidateCartInputs = {
-    branch_id: string
+    qr?: string
+    branch_qr?: string
+    order_note?: string
     items: ValidateCartItemType[]
 }

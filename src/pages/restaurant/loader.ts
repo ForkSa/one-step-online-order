@@ -1,11 +1,37 @@
 import { type LoaderFunction, redirect } from "react-router"
 
+import { getEntryContext } from "@/apis/entry-context"
 import { getStore } from "@/apis/store"
 import { jotaiStore, storeInfoAtom } from "@/atoms"
+import { entryContextToStoreInfo } from "@/lib/entry-context"
 
-export const clientLoader: LoaderFunction = async ({ params }) => {
+export const clientLoader: LoaderFunction = async ({ params, request }) => {
     try {
         const { slug } = params
+        const url = new URL(request.url)
+        const qr = url.searchParams.get("qr")
+        const branchQr = url.searchParams.get("branch_qr")
+
+        if (qr || branchQr) {
+            const response = await getEntryContext(slug as string, {
+                qr: qr ?? undefined,
+                branch_qr: branchQr ?? undefined,
+            })
+
+            const entry = response?.data
+
+            if (!entry) return redirect("/not-found")
+
+            jotaiStore.set(
+                storeInfoAtom,
+                entryContextToStoreInfo(entry, slug as string, {
+                    qr: qr ?? undefined,
+                    branch_qr: branchQr ?? undefined,
+                })
+            )
+
+            return redirect(`/restaurant/${slug}/items`)
+        }
 
         const response = await getStore(slug as string)
         const data = response?.data

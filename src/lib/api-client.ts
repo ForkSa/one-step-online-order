@@ -14,6 +14,7 @@ type options = {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     data?: any
     auth?: boolean
+    sessionId?: string
 }
 
 /**
@@ -28,7 +29,15 @@ type options = {
  */
 export const apiClient = async <T>(options: options): Promise<T> => {
     try {
-        const { url, method = "GET", retry = 0, timeout = 10000, data = undefined, auth = false } = options
+        const {
+            url,
+            method = "GET",
+            retry = 0,
+            timeout = 10000,
+            data = undefined,
+            auth = false,
+            sessionId,
+        } = options
 
         const baseURL = url?.includes("http") ? url : import.meta.env.VITE_API_URL + url?.replace(/^\//, "")
 
@@ -46,6 +55,10 @@ export const apiClient = async <T>(options: options): Promise<T> => {
             }
 
             headers.Authorization = "Bearer " + token?.replace(/"/g, "")
+        }
+
+        if (sessionId) {
+            headers["X-Session-Id"] = sessionId
         }
 
         if (options.headers) {

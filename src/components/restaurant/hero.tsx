@@ -6,7 +6,7 @@ import { Link } from "react-router"
 import { Skeleton } from "@/components/ui/skeleton"
 
 import FakeImage from "@/assets/images/fake-image.webp"
-import { storeInfoAtom } from "@/atoms"
+import { defaultStoreInfo, storeInfoAtom } from "@/atoms"
 
 interface Props {
     restaurant: RestaurantMenu
@@ -17,10 +17,7 @@ export default function RestaurantHero({ restaurant, backTo }: Props) {
     const setStoreInfo = useSetAtom(storeInfoAtom)
 
     const onBackAction = () => {
-        setStoreInfo({
-            branch: null,
-            slug: undefined,
-        })
+        setStoreInfo(defaultStoreInfo)
     }
 
     return (

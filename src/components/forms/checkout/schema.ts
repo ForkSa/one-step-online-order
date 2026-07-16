@@ -1,9 +1,8 @@
 import { z } from "zod"
 
+import type { StoreInfo } from "@/atoms"
 import CashIcon from "@/assets/icons/cash"
 import MoneyIcon from "@/assets/icons/money"
-
-//import WalletIcon from "@/assets/icons/wallet"
 
 export const payTypes = {
     CASH: "0",
@@ -12,6 +11,18 @@ export const payTypes = {
 } as const
 
 export type PayType = (typeof payTypes)[keyof typeof payTypes]
+
+export const orderTypes = {
+    DINE_IN: "dine-in",
+    TAKEAWAY: "takeaway",
+    DELIVERY: "delivery",
+} as const
+
+export const OrderTypesArray = [
+    { label: "داخل المطعم", value: orderTypes.DINE_IN },
+    { label: "استلام", value: orderTypes.TAKEAWAY },
+    { label: "توصيل", value: orderTypes.DELIVERY },
+]
 
 export const PayTypesArray = [
     {
@@ -24,28 +35,48 @@ export const PayTypesArray = [
         value: payTypes.CARD,
         icon: CashIcon,
     },
-    // {
-    //     label: "كاش وفيزا",
-    //     value: payTypes.WALLET,
-    //     icon: WalletIcon,
-    // },
 ]
 
-export const checkoutFormSchema = z
-    .object({
-        payType: z.enum([payTypes.CASH, payTypes.CARD, payTypes.WALLET]),
-        tableNumber: z.string().min(1, {
-            message: "رقم الطاولة يجب أن يكون موجود",
-        }),
-    })
-    .refine(
-        (data) => {
-            return /^\d{1,3}$/.test(data.tableNumber)
-        },
-        {
-            message: "رقم الطاولة يجب أن يكون رقماً من 1 إلى 3 أرقام",
-            path: ["tableNumber"],
-        }
-    )
+export const createCheckoutFormSchema = (storeInfo: StoreInfo) => {
+    const isBranchQr = storeInfo.source === "branch" || Boolean(storeInfo.branch_qr)
+    const isTableQr = storeInfo.source === "table" || Boolean(storeInfo.qr)
 
-export type CheckoutFormSchemaType = z.infer<typeof checkoutFormSchema>
+    return z
+        .object({
+            payType: z.enum([payTypes.CASH, payTypes.CARD, payTypes.WALLET]),
+            orderType: isBranchQr
+                ? z.enum([orderTypes.DINE_IN, orderTypes.TAKEAWAY, orderTypes.DELIVERY])
+                : z.string().optional(),
+            tableNumber: z.string().optional(),
+        })
+        .superRefine((data, ctx) => {
+            if (isBranchQr && data.orderType === orderTypes.DINE_IN) {
+                if (!data.tableNumber?.trim()) {
+                    ctx.addIssue({
+                        code: z.ZodIssueCode.custom,
+                        message: "رقم الطاولة يجب أن يكون موجود",
+                        path: ["tableNumber"],
+                    })
+                    return
+                }
+
+                if (!/^\d{1,3}$/.test(data.tableNumber)) {
+                    ctx.addIssue({
+                        code: z.ZodIssueCode.custom,
+                        message: "رقم الطاولة يجب أن يكون رقماً من 1 إلى 3 أرقام",
+                        path: ["tableNumber"],
+                    })
+                }
+            }
+
+            if (!isBranchQr && !isTableQr && !data.tableNumber?.trim()) {
+                ctx.addIssue({
+                    code: z.ZodIssueCode.custom,
+                    message: "رقم الطاولة يجب أن يكون موجود",
+                    path: ["tableNumber"],
+                })
+            }
+        })
+}
+
+export type CheckoutFormSchemaType = z.infer<ReturnType<typeof createCheckoutFormSchema>>
