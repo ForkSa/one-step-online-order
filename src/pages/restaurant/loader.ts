@@ -1,9 +1,10 @@
 import { type LoaderFunction, redirect } from "react-router"
 
+import { entryContextToStoreInfo } from "@/lib/entry-context"
+
 import { getEntryContext } from "@/apis/entry-context"
 import { getStore } from "@/apis/store"
 import { jotaiStore, storeInfoAtom } from "@/atoms"
-import { entryContextToStoreInfo } from "@/lib/entry-context"
 
 export const clientLoader: LoaderFunction = async ({ params, request }) => {
     try {

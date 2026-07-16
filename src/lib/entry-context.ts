@@ -1,5 +1,6 @@
-import type { StoreInfo } from "@/atoms"
 import { getOrCreateSessionId } from "@/lib/ordering-session"
+
+import type { StoreInfo } from "@/atoms"
 
 export const buildQrPayload = (storeInfo: StoreInfo): { qr: string } | { branch_qr: string } => {
     if (storeInfo.qr) return { qr: storeInfo.qr }

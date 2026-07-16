@@ -1,5 +1,5 @@
-import { NuqsAdapter } from "nuqs/adapters/react"
 import { Provider as JotaiProvider } from "jotai"
+import { NuqsAdapter } from "nuqs/adapters/react"
 
 import { Suspense } from "react"
 import { Provider as BusProvider } from "react-bus"

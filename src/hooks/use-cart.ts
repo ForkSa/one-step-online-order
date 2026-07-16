@@ -4,9 +4,10 @@ import { toast } from "sonner"
 
 import { useNavigate } from "react-router"
 
+import { buildQrPayload, mergeEntryIntoStoreInfo } from "@/lib/entry-context"
+
 import { validateCart } from "@/apis/cart"
 import { cartSummary, storeInfoAtom } from "@/atoms"
-import { buildQrPayload, mergeEntryIntoStoreInfo } from "@/lib/entry-context"
 
 export type UpdateCartInputsType = {
     product_id: number

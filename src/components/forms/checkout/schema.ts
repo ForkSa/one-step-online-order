@@ -1,8 +1,8 @@
 import { z } from "zod"
 
-import type { StoreInfo } from "@/atoms"
 import CashIcon from "@/assets/icons/cash"
 import MoneyIcon from "@/assets/icons/money"
+import type { StoreInfo } from "@/atoms"
 
 export const payTypes = {
     CASH: "0",

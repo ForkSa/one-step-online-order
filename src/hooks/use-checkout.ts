@@ -4,12 +4,13 @@ import { toast } from "sonner"
 
 import { useNavigate } from "react-router"
 
+import { buildQrPayload } from "@/lib/entry-context"
+import { setSessionId } from "@/lib/ordering-session"
+
 import { checkout } from "@/apis/checkout"
 import type { StoreInfo } from "@/atoms"
 import { cartSummary, storeInfoAtom } from "@/atoms"
-import { payTypes, type PayType } from "@/components/forms/checkout/schema"
-import { buildQrPayload } from "@/lib/entry-context"
-import { setSessionId } from "@/lib/ordering-session"
+import { type PayType, payTypes } from "@/components/forms/checkout/schema"
 
 const toPaymentMethod = (payType: PayType): PaymentMethod => {
     if (payType === payTypes.CASH) return "cash"
