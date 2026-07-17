@@ -10,13 +10,9 @@ import { setSessionId } from "@/lib/ordering-session"
 import { checkout } from "@/apis/checkout"
 import type { StoreInfo } from "@/atoms"
 import { cartSummary, storeInfoAtom } from "@/atoms"
-import { type PayType, payTypes } from "@/components/forms/checkout/schema"
+import { payTypes } from "@/components/forms/checkout/schema"
 
-const toPaymentMethod = (payType: PayType): PaymentMethod => {
-    if (payType === payTypes.CASH) return "cash"
-    if (payType === payTypes.CARD) return "visa"
-    return "cash_and_visa"
-}
+
 
 export const useCheckout = () => {
     const [summary, setSummary] = useAtom(cartSummary)
@@ -80,12 +76,11 @@ export const mapCheckoutInputs = (
             addons: item.addons?.map((addon) => ({ addon_id: addon.addon_id, quantity: addon.quantity })) ?? [],
         })) ?? []
 
-    const paymentMethod = toPaymentMethod(inputs.payType)
     const total = summary?.total ?? 0
 
     const base: CheckoutInputs = {
         ...buildQrPayload(storeInfo),
-        payment_method: paymentMethod,
+        payment_method: Number(inputs.payType),
         paid_with_cash: inputs?.payType === payTypes.CASH || inputs?.payType === payTypes.WALLET ? total : 0,
         paid_with_visa: inputs?.payType === payTypes.CARD || inputs?.payType === payTypes.WALLET ? total : 0,
         order_note: "",

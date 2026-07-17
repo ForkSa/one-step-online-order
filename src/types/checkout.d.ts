@@ -1,4 +1,4 @@
-type PaymentMethod = "cash" | "visa" | "cash_and_visa"
+type PaymentMethod = number
 
 type CheckoutOrder = {
     id: number
