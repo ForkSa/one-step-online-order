@@ -35,7 +35,7 @@ export const useCheckout = () => {
 
             const mappedInputs = mapCheckoutInputs(inputs, summary, storeInfo)
 
-            const response = await checkout(mappedInputs, storeInfo.slug, storeInfo.session_id)
+            const response = await checkout(mappedInputs, storeInfo.slug, storeInfo.session_id || "")
             return response
         },
         onSuccess: (data: ApiResponse<CheckoutResponse>) => {
